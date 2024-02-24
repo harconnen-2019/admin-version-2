@@ -1,5 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { useQuery } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { authApi } from '@/entities/auth';
@@ -15,7 +15,10 @@ export function useLayout() {
   const navigate = useNavigate();
   const { session } = useAuth();
 
-  const { isLoading, error, data } = useQuery(authApi.key, () => authApi.session());
+  const { isLoading, error, data } = useQuery({
+    queryKey: [authApi.key],
+    queryFn: authApi.session,
+  });
 
   useEffect(() => {
     if ((isLoading === false && data?.success !== 1) || error !== null) {
