@@ -1,0 +1,7 @@
+**/node_modules
+**/public
+**/build
+.eslintrc.cjs
+_templates
+
+vite.config.ts
