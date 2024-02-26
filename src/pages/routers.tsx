@@ -4,8 +4,19 @@ import { AuthProvider } from '@/shared/context';
 
 import { LoginPage } from './auth-pages';
 import { DashboardPage } from './dashboard-page';
-import { NotFoundPage, ServerErrorPage } from './error-pages';
+import { NotFoundPage, ServerErrorPage } from './errors-pages';
 import { Layout } from './layout';
+import { PATH_PAGE } from './path';
+import { routerPlaces } from './places-pages/places';
+
+const privateRouter = (
+  <>
+    {routerPlaces}
+    {/* {routerPlaceLanguage} */}
+    {/* {routerStaticPage} */}
+    {/* {routerPageLanguage} */}
+  </>
+);
 
 /**
  * Формирование маршрутизатора всего приложения
@@ -16,12 +27,13 @@ export function Routers() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path={PATH_PAGE.root} element={<Layout />}>
           <Route index element={<DashboardPage />} />
+          <Route path={PATH_PAGE.page500} element={<ServerErrorPage />} />
+          {privateRouter}
         </Route>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/404" element={<NotFoundPage />} />
-        <Route path="/500" element={<ServerErrorPage />} />
+        <Route path={PATH_PAGE.login} element={<LoginPage />} />
+        <Route path={PATH_PAGE.page404} element={<NotFoundPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </AuthProvider>

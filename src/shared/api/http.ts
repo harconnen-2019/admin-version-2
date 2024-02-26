@@ -2,6 +2,8 @@
 https://eckertalex.dev/blog/typescript-fetch-wrapper
 */
 
+import { DEBUG } from '../lib';
+
 /**
  * Формирует HTTP запрос к серверу, применяет настройки, возвращает данные в формате json
  * @param path путь к api
@@ -76,7 +78,7 @@ function newMutateFormData(method: 'POST' | 'PUT') {
 
 export const http = {
   get: newRequest('GET'),
-  list: newRequest('LIST'),
+  list: newRequest(DEBUG ? 'PATCH' : 'LIST'),
   post: newMutate('POST'),
   put: newMutate('PUT'),
   delete: newRequest('DELETE'),

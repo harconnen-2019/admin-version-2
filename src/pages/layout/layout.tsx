@@ -1,7 +1,7 @@
+import { Outlet } from 'react-router-dom';
+
 import { AppShell, Box, Space } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-
-import { Outlet } from 'react-router-dom';
 
 import { SpinnerPage } from '@/shared/ui';
 

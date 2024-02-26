@@ -25,7 +25,7 @@ export function getCountPages(number_: number | undefined, limit: number = DEFAU
  * @param string_ дата в формате "2022-10-14T12:23:36.764855Z"
  * @returns Дата на русском "14 октября 22 г."
  */
-export function getData(string_: string): string {
+export function getData(string_: Date): string {
   return new Date(string_).toLocaleString('ru', {
     year: '2-digit',
     month: 'long',
@@ -118,4 +118,17 @@ export function getRandom(min: number, max: number) {
     throw new Error('Неверный ввод: min должно быть меньше max');
   }
   return Math.floor(Math.random() * (max - min) + min);
+}
+
+/**
+ * Преобразование объекта в формат FormData
+ * @param state исходный объект
+ * @returns FormData
+ */
+export function getFormDate(state: { [x: string]: string | number | null | Blob }) {
+  const result = new FormData();
+  for (const string_ of Object.keys(state)) {
+    state[string_] && result.append(string_, String(state[string_]));
+  }
+  return result;
 }

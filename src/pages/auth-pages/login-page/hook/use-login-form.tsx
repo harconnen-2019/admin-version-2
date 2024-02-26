@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { authApi } from '@/entities/auth';
+import { PATH_PAGE } from '@/pages/path';
 import { useAuth } from '@/shared/hooks';
 
 /**
@@ -17,7 +18,7 @@ export function useLoginForm() {
   const location = useLocation();
   const { signIn } = useAuth();
 
-  const fromPage = location.state?.from?.pathname || '/';
+  const fromPage = location.state?.from?.pathname || PATH_PAGE.root;
 
   const handleSubmit = (value: { username: string; password: string }) => {
     setError(undefined);
@@ -36,7 +37,6 @@ export function useLoginForm() {
       .catch((error_) => {
         setError(error_);
         setIsSend(false);
-        // Log.warn('Log: Авторизация провалена ', error_);
       });
   };
 

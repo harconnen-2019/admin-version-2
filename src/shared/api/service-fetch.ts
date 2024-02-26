@@ -1,53 +1,46 @@
-import { http } from './http';
 import { IRequestParameters } from './schemes-merge';
 
 /**
  * Формирует сервис для отправки и получения данных с сервера
- * Определяет интерфейсы данных для отправки и получения
+ * имеет дополнительные методы [queryString] для формирования параметров запроса
+ * Создает ключи для react-query
  * @param {string} url - Endpoint URL
- * G - Response GET
- * L - Response LIST
- * V - Request POST
- * P - Response POST
- * V1- Request PUT
- * U - Response PUT
- * D - Response DELETE
+ * @param {string} nameKey - Название ключа в "существительное в единственном числе"
  */
-export class ServiceFetch<G, L, V, P, V1, U, D> {
+export class ServiceFetch {
   protected readonly _api;
+  protected readonly _key;
 
-  constructor(url: string) {
+  constructor(url: string, nameKey: string) {
     this._api = url;
+    this._key = nameKey;
   }
 
-  get key() {
+  get api() {
     return this._api;
   }
-
-  get(id: string | number, parameters?: IRequestParameters): Promise<G> {
-    return http.get(`${this._api}?id=${id}${this.queryString('&', parameters)}`);
+  get keyId() {
+    return this._key;
+  }
+  get keyList() {
+    return `${this._key}-list`;
   }
 
-  list(parameters?: IRequestParameters) {
-    return http.list<L>(`${this._api}${this.queryString('?', parameters)}`);
-  }
-
-  create(value: V) {
-    return http.post<V, P>(this._api, value);
-  }
-
-  update(value: V1) {
-    return http.put<V1, U>(this._api, value);
-  }
-
-  remove(id: string | number): Promise<D> {
-    return http.delete(`${this._api}?id=${id}`);
-  }
-
+  /**
+   * Преобразует объект в строку с параметрами разделяя &
+   * @param string_ начало параметров, опционально - ?
+   * @param parameters объект со списком параметров
+   * @returns строка с параметрами начинается на "?" или задать свой
+   */
   protected queryString(string_: '?' | '&', parameters?: IRequestParameters) {
     return parameters ? `${string_}${this._objectToQueryString(parameters)}` : '';
   }
 
+  /**
+   * Проходит по объекту и возвращает строку из объектов, разделяя &
+   * @param object объект с параметрами
+   * @returns строка из параметров с разделителем &
+   */
   protected _objectToQueryString(object: IRequestParameters) {
     return Object.keys(object)
       .map((key) => `${key}=${object[key]}`)

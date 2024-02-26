@@ -1,8 +1,10 @@
 import { http } from 'msw';
 import { httpAuth } from './api/auth';
+import { httpPlaces } from './api/places';
 
 export const handlers = [
   ...httpAuth,
+  ...httpPlaces,
   // http.get('/api/red/users/session/', ({ request, params, cookies }) => {
   //   return HttpResponse.json(session);
   // }),

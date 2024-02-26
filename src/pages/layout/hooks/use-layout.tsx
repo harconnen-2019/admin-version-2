@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { authApi } from '@/entities/auth';
+import { PATH_PAGE } from '@/pages/path';
 import { useAuth } from '@/shared/hooks';
 
 /**
@@ -22,7 +23,7 @@ export function useLayout() {
 
   useEffect(() => {
     if ((isLoading === false && data?.success !== 1) || error !== null) {
-      return session(undefined, undefined, () => navigate('/login'));
+      return session(undefined, undefined, () => navigate(PATH_PAGE.login));
     }
 
     const currentUser = data?.session?.user?.username ?? undefined;
