@@ -2,7 +2,7 @@ import { Button } from '@mantine/core';
 import { QueryClient, useMutation } from '@tanstack/react-query';
 
 import { authApi } from '@/entities/auth';
-import { placeApi } from '../../api/place-api';
+import { placeApi } from '../../api/places-api';
 
 const queryClient = new QueryClient();
 

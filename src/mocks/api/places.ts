@@ -3,7 +3,7 @@
 import { BASE_URL } from '@/shared/lib';
 import { HttpResponse, http } from 'msw';
 
-// const url = 'https://admin.rstream.tech';
+const url = 'https://admin.rstream.tech';
 const api = `${BASE_URL}/places/item/`;
 
 const list = {
@@ -118,7 +118,7 @@ const get = {
     pp: 'TODO',
     dmca: 'TODO',
     favicon: null,
-    og_img: null,
+    og_img: `${url}/storage/place/og/2023/12/01/Screenshot_from_2023-10-04_18-32-45.png`,
     logo_dark: null,
     logo_light: null,
     color_scheme: null,

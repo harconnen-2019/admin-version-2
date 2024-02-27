@@ -20,7 +20,7 @@ import {
 import { NavLink, useParams } from 'react-router-dom';
 
 import { applicationApi } from '@/entities/application';
-import { placeType } from '@/entities/place';
+import { placeType } from '@/entities/places';
 import { PATH_PAGE, VERSION } from '@/shared/lib';
 import { useEffect, useState } from 'react';
 import classes from './navbar.module.css';

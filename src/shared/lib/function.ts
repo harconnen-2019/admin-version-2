@@ -132,3 +132,16 @@ export function getFormDate(state: { [x: string]: string | number | null | Blob 
   }
   return result;
 }
+
+/**
+ * Валидация полей формы по умолчанию
+ * @param value элемент useForm
+ * @returns текст
+ */
+export const defaultValidate = (value: string | number) => {
+  if (typeof value === 'string') {
+    return value.length === 0 ? 'Обязательно для заполнения' : undefined;
+  } else {
+    return value === 0 ? 'Обязательно для заполнения' : undefined;
+  }
+};

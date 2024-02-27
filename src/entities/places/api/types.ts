@@ -1,3 +1,4 @@
+import { schemaPlacesType } from '@/entities/places-types/api/types';
 import { schemaDate, schemaValidate } from '@/shared/api';
 import { z } from 'zod';
 
@@ -12,8 +13,7 @@ export const schemaPlace = z
     name: z.string(),
     domain: z.string(),
     template: z.string(),
-    // TODO вставить схему type
-    type: z.any(),
+    type: schemaPlacesType,
     favicon: z.string().nullable(),
     og_img: z.string().nullable(),
     logo_light: z.string().nullable(),
@@ -58,10 +58,10 @@ const schemaRequestPostPlace = schemaPlace
     id: true,
   })
   .extend({
-    favicon: z.instanceof(File).optional(),
-    og_img: z.instanceof(File).optional(),
-    logo_light: z.instanceof(File).optional(),
-    logo_dark: z.instanceof(File).optional(),
+    favicon: z.union([z.string(), z.instanceof(File)]).optional(),
+    og_img: z.union([z.string(), z.instanceof(File)]).optional(),
+    logo_light: z.union([z.string(), z.instanceof(File)]).optional(),
+    logo_dark: z.union([z.string(), z.instanceof(File)]).optional(),
     type: z.number(),
   });
 export type IRequestPostPlace = z.infer<typeof schemaRequestPostPlace>;

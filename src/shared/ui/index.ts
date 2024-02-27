@@ -2,6 +2,7 @@ export * from './buttons/button-add';
 export * from './buttons/button-del';
 export * from './buttons/button-edit';
 export * from './buttons/button-icon';
+export * from './buttons/group-buttons-form';
 export * from './error-message/error-message';
 export * from './spinners/loadable';
 export * from './spinners/spinner-page';

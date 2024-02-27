@@ -1,22 +1,15 @@
-import { useNavigate } from 'react-router-dom';
-
-import { Button, Group, Space } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
-import { FormPlaceAdd, placeType, useCreatePlace } from '@/entities/place';
-import { getFormDate } from '@/shared/lib';
-import { ErrorMessage, TitlePage } from '@/shared/ui';
+import { FormPlaceAdd, placeType, useCreatePlace } from '@/entities/places';
+import { defaultValidate, getFormDate } from '@/shared/lib';
+import { ErrorMessage, GroupButtonForm, TitlePage } from '@/shared/ui';
 
 /**
  * Страница добавления новой витрины
  * @returns форма добавления витрины
  */
 export default function PlaceCreatePage() {
-  const navigate = useNavigate();
   const createPlace = useCreatePlace();
-
-  const allValidate = (value: string) =>
-    value.length === 0 ? 'Обязательно для заполнения' : undefined;
 
   const form = useForm<placeType.IRequestPostPlace>({
     initialValues: {
@@ -35,10 +28,10 @@ export default function PlaceCreatePage() {
     },
 
     validate: {
-      type: (value: number) => (value === 0 ? 'Обязательно для заполнения' : undefined),
-      name: allValidate,
-      domain: allValidate,
-      template: allValidate,
+      type: defaultValidate,
+      name: defaultValidate,
+      domain: defaultValidate,
+      template: defaultValidate,
     },
   });
 
@@ -51,19 +44,10 @@ export default function PlaceCreatePage() {
         })}
       >
         <FormPlaceAdd form={form} />
-        <Space h={50} />
         {createPlace.isError && (
           <ErrorMessage error={createPlace.error}>Форма не отправлена</ErrorMessage>
         )}
-        <Space h={50} />
-        <Group>
-          <Button type="submit" variant="light" disabled={createPlace.isPending}>
-            Отправить форму
-          </Button>
-          <Button type="button" variant="default" onClick={() => navigate(-1)}>
-            Вернуться назад
-          </Button>
-        </Group>
+        <GroupButtonForm disabled={createPlace.isPending} />
       </form>
     </>
   );

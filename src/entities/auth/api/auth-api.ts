@@ -1,4 +1,4 @@
-import { placeType } from '@/entities/place';
+import { placeType } from '@/entities/places';
 import { http, schemaValidate } from '@/shared/api';
 import { BASE_URL } from '@/shared/lib';
 import { z } from 'zod';

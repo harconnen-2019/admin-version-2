@@ -1,6 +1,6 @@
 import { Space } from '@mantine/core';
 
-import { TrPlace, usePlaceList, useRemovePlace } from '@/entities/place';
+import { TrPlace, usePlaceList, useRemovePlace } from '@/entities/places';
 import { PATH_PAGE } from '@/pages/path';
 import { useAuth } from '@/shared/hooks';
 import { ButtonAdd, TableData, TitlePage } from '@/shared/ui';

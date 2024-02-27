@@ -1,12 +1,12 @@
 import {
   CheckIcon,
   ColorSwatch,
+  Fieldset,
   Grid,
   Group,
   NativeSelect,
   SegmentedControl,
   Space,
-  Text,
   TextInput,
   Textarea,
   rem,
@@ -14,7 +14,7 @@ import {
 import { UseFormReturnType } from '@mantine/form';
 import { useState } from 'react';
 
-// import { placeTypeApi } from '../../api/place-type-api';
+import { SelectPlaceTypes } from '@/entities/places-types/ui/select/select-place-types';
 import { IRequestPostPlace, IRequestPutPlace } from '../../api/types';
 import { PlaceImgUpload } from './place-img-upload';
 
@@ -35,7 +35,7 @@ const themeColor = [
 ];
 
 interface IProperties {
-  form: UseFormReturnType<IRequestPostPlace | Omit<IRequestPutPlace, 'id'>>;
+  form: UseFormReturnType<IRequestPostPlace> | UseFormReturnType<IRequestPutPlace>;
 }
 
 /**
@@ -47,7 +47,12 @@ interface IProperties {
 export function FormPlaceAdd({ form }: Readonly<IProperties>) {
   const [segment, setSegment] = useState('1');
 
-  // const { data: typePlaceList } = placeTypeApi.useList();
+  /**
+   * Пока это единственное решение как принимать два интерфейса
+   * UseFormReturnType<IRequestPostPlace> | UseFormReturnType<IRequestPutPlace>
+   * И не делать в IRequestPutPlace поле id опциональным
+   */
+  const { getInputProps, setFieldValue, values } = form as UseFormReturnType<IRequestPostPlace>;
 
   return (
     <>
@@ -55,26 +60,10 @@ export function FormPlaceAdd({ form }: Readonly<IProperties>) {
       <Space h={20} />
       {segment === '1' && (
         <>
-          <Group mt="md">
-            <NativeSelect
-              withAsterisk
-              label="Тип витрины"
-              {...form.getInputProps('type')}
-              mt="md"
-              w={300}
-            >
-              <option disabled value="0">
-                Выбрать...
-              </option>
-              <option value="1">Выбрать...</option>
-              {/* {typePlaceList?.places_type_list?.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))} */}
-            </NativeSelect>
+          <Group mt="md" align="flex-end">
+            <SelectPlaceTypes getInputProps={getInputProps('type')} />
 
-            <NativeSelect label="Блок спасибо" {...form.getInputProps('thankyou_type')} mt="md">
+            <NativeSelect label="Блок спасибо" {...getInputProps('thankyou_type')} mt="md">
               <option disabled value="">
                 Выключено...
               </option>
@@ -84,45 +73,46 @@ export function FormPlaceAdd({ form }: Readonly<IProperties>) {
             </NativeSelect>
           </Group>
 
-          <Group mt="md">
+          <Group mt="xl">
             <TextInput
               withAsterisk
               label="Название"
               placeholder="Название витрины"
-              {...form.getInputProps('name')}
+              {...getInputProps('name')}
               w={300}
             />
             <TextInput
               withAsterisk
               label="Домен"
               placeholder="Домен витрины"
-              {...form.getInputProps('domain')}
+              {...getInputProps('domain')}
               w={300}
             />
             <TextInput
               withAsterisk
               label="Шаблон"
               placeholder="Путь к дизайн-шаблону витрины"
-              {...form.getInputProps('template')}
+              {...getInputProps('template')}
               w={300}
             />
           </Group>
 
-          <Text mt="xl">Цветовая тема сайта</Text>
-          <Group mt="md">
-            {themeColor.map((item) => (
-              <ColorSwatch
-                key={item.theme}
-                onClick={() => form.setFieldValue('color_scheme', item.theme)}
-                color={item.color}
-                style={{ color: '#fff', cursor: 'pointer' }}
-              >
-                {form.values.color_scheme === item.theme && (
-                  <CheckIcon style={{ width: rem(12), height: rem(12) }} />
-                )}
-              </ColorSwatch>
-            ))}
-          </Group>
+          <Fieldset legend="Цветовая тема сайта" mt="xl">
+            <Group>
+              {themeColor.map((item) => (
+                <ColorSwatch
+                  key={item.theme}
+                  onClick={() => setFieldValue('color_scheme', item.theme)}
+                  color={item.color}
+                  style={{ color: '#fff', cursor: 'pointer' }}
+                >
+                  {form.values.color_scheme === item.theme && (
+                    <CheckIcon style={{ width: rem(12), height: rem(12) }} />
+                  )}
+                </ColorSwatch>
+              ))}
+            </Group>
+          </Fieldset>
         </>
       )}
 
@@ -130,9 +120,9 @@ export function FormPlaceAdd({ form }: Readonly<IProperties>) {
         <Grid grow gutter="sm" mt="xl">
           <Grid.Col span={6}>
             <PlaceImgUpload
-              click={() => form.setFieldValue('favicon', undefined)}
-              formValue={form.values['favicon']}
-              getInputProps={form.getInputProps('favicon')}
+              click={() => setFieldValue('favicon', undefined)}
+              formValue={values['favicon']}
+              getInputProps={getInputProps('favicon')}
               label="Favicon"
               note="Разрешено загружать: svg"
               accept="image/svg+xml"
@@ -141,27 +131,27 @@ export function FormPlaceAdd({ form }: Readonly<IProperties>) {
 
           <Grid.Col span={6}>
             <PlaceImgUpload
-              click={() => form.setFieldValue('og_img', undefined)}
-              formValue={form.values.og_img}
-              getInputProps={form.getInputProps('og_img')}
+              click={() => setFieldValue('og_img', undefined)}
+              formValue={values.og_img}
+              getInputProps={getInputProps('og_img')}
               label="OG Постер"
             />
           </Grid.Col>
 
           <Grid.Col span={6}>
             <PlaceImgUpload
-              click={() => form.setFieldValue('logo_light', undefined)}
-              formValue={form.values.logo_light}
-              getInputProps={form.getInputProps('logo_light')}
+              click={() => setFieldValue('logo_light', undefined)}
+              formValue={values.logo_light}
+              getInputProps={getInputProps('logo_light')}
               label="Лого для темной темы"
             />
           </Grid.Col>
 
           <Grid.Col span={6}>
             <PlaceImgUpload
-              click={() => form.setFieldValue('logo_dark', undefined)}
-              formValue={form.values.logo_dark}
-              getInputProps={form.getInputProps('logo_dark')}
+              click={() => setFieldValue('logo_dark', undefined)}
+              formValue={values.logo_dark}
+              getInputProps={getInputProps('logo_dark')}
               label="Лого для светлой темы"
             />
           </Grid.Col>
@@ -173,7 +163,7 @@ export function FormPlaceAdd({ form }: Readonly<IProperties>) {
           <Textarea
             key={item}
             label={`Код счетчиков : < ${item.slice(8, 12).toUpperCase()} >`}
-            {...form.getInputProps(item)}
+            {...getInputProps(item)}
             mt="md"
             autosize
             minRows={4}
