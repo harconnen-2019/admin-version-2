@@ -25,7 +25,7 @@ export function getCountPages(number_: number | undefined, limit: number = DEFAU
  * @param string_ дата в формате "2022-10-14T12:23:36.764855Z"
  * @returns Дата на русском "14 октября 22 г."
  */
-export function getData(string_: Date): string {
+export function getDate(string_: Date): string {
   return new Date(string_).toLocaleString('ru', {
     year: '2-digit',
     month: 'long',

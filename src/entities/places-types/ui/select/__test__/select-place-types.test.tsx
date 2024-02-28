@@ -1,12 +1,13 @@
 import { usePlaceTypeList } from '@/entities/places-types/hooks/use-place-types-query';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { renderHook, waitFor } from '@testing-library/react';
+import { ReactNode } from 'react';
 import { describe, expect, it } from 'vitest';
 
 const queryClient = new QueryClient();
 
 describe('Testing our React application', () => {
-  const wrapper = ({ children }) => (
+  const wrapper = ({ children }: { children: ReactNode }) => (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
   );
 
@@ -30,7 +31,8 @@ describe('Testing our React application', () => {
 
     await waitFor(() => expect(result.current.status).toEqual('success'));
     // expect(result.current.status).toEqual('success');
-    expect(result.current.listPlaceTypes[0]?.name).toEqual('site');
+    result.current.data?.places_type_list &&
+      expect(result.current.data?.places_type_list[0].name).toEqual('site');
 
     // await waitFor(() => screen.debug());
     // screen.debug();

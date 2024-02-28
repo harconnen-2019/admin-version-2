@@ -1,17 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { placeTypeApi } from '..';
+import { ServiceFetch } from '@/shared/api';
+import { BASE_URL } from '@/shared/lib';
+import { schemaListPlaceType } from '../api/types';
+
+const _api = `${BASE_URL}/places/type/`;
+const placeTypeApi = new ServiceFetch(_api, 'placeType');
 
 /**
  * Хук для вызова списка типов витрин
- * @returns  listPlaceTypes, status, error
+ * Подключается схема zod списка типов витрин, и схема валидации апи
+ * @returns  Валидный ответ или ошибка
  */
 export const usePlaceTypeList = () => {
-  const { status, data, error } = useQuery({
+  return useQuery({
     queryKey: [placeTypeApi.keyList],
-    queryFn: () => placeTypeApi.list(),
+    queryFn: async () => {
+      const response = await placeTypeApi.list();
+      return schemaListPlaceType.parse(response);
+    },
   });
-  const listPlaceTypes = data?.places_type_list ?? [];
-
-  return { listPlaceTypes, status, error };
 };

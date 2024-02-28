@@ -14,7 +14,7 @@ import {
 import { UseFormReturnType } from '@mantine/form';
 import { useState } from 'react';
 
-import { SelectPlaceTypes } from '@/entities/places-types/ui/select/select-place-types';
+import { SelectPlaceTypes } from '@/entities/places-types';
 import { IRequestPostPlace, IRequestPutPlace } from '../../api/types';
 import { PlaceImgUpload } from './place-img-upload';
 

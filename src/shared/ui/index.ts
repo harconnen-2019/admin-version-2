@@ -5,6 +5,7 @@ export * from './buttons/button-edit';
 export * from './buttons/button-icon';
 export * from './buttons/group-buttons-form';
 export * from './error-message/error-message';
+export * from './links/link-anchor';
 export * from './spinners/loadable';
 export * from './spinners/spinner-page';
 export * from './tables/table-data';
