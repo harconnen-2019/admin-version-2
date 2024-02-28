@@ -1,9 +1,9 @@
-import { Alert, Button, List, Space } from '@mantine/core';
+import { Alert, List, Space } from '@mantine/core';
 import { IconInfoCircle } from '@tabler/icons-react';
 import { ReactNode } from 'react';
 
 import { Log } from '@/shared/lib';
-import { useNavigate } from 'react-router-dom';
+import { ButtonBack } from '../buttons/button-back';
 
 interface ErrorMessageProperties {
   children: ReactNode;
@@ -16,7 +16,7 @@ interface ErrorMessageProperties {
  * @param root0 пропсы
  * @param root0.children 1 строка текста ошибки
  * @param root0.error текст ошибки
- * @param root0.buttonBack
+ * @param root0.buttonBack кнопка назад
  * @returns JSX Element
  */
 export function ErrorMessage({
@@ -25,8 +25,6 @@ export function ErrorMessage({
   buttonBack = false,
   ...properties
 }: Readonly<ErrorMessageProperties>) {
-  const navigate = useNavigate();
-
   if (!children || error === undefined) {
     Log.warn('Log: Ошибка пришла в неправильном формате ', { error });
     return;
@@ -52,9 +50,7 @@ export function ErrorMessage({
       {buttonBack && (
         <>
           <Space h={50} />
-          <Button type="button" variant="default" onClick={() => navigate(-1)}>
-            Вернуться назад
-          </Button>
+          <ButtonBack />
         </>
       )}
     </>

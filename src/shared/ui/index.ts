@@ -1,4 +1,5 @@
 export * from './buttons/button-add';
+export * from './buttons/button-back';
 export * from './buttons/button-del';
 export * from './buttons/button-edit';
 export * from './buttons/button-icon';

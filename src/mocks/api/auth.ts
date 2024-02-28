@@ -1,5 +1,5 @@
-import { BASE_URL } from '@/shared/lib';
 import { HttpResponse, http } from 'msw';
+import { BASE_URL } from '../../shared/lib';
 
 const url = 'https://admin.rstream.tech';
 const apiSession = `${BASE_URL}/users/session/`;

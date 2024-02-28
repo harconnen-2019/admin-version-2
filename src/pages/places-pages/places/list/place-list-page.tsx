@@ -12,8 +12,10 @@ import { ButtonAdd, TableData, TitlePage } from '@/shared/ui';
 export default function PlaceListPage() {
   const { place } = useAuth();
 
-  const { listPlaces, status, error } = usePlaceList();
+  const { data, status, error } = usePlaceList();
   const removePlace = useRemovePlace();
+
+  const listPlaces = data?.places_item_list ?? [];
 
   return (
     <>

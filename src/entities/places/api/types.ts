@@ -4,7 +4,7 @@ import { z } from 'zod';
 
 /**
  * Схема элемента витрины
- * Поле type является элементом другой схемы
+ * Поле 'type' является элементом другой схемы
  * Добавляем зарезервированные поля с датами
  */
 export const schemaPlace = z
@@ -25,11 +25,9 @@ export const schemaPlace = z
   })
   .merge(schemaDate);
 
-export type IPlace = z.infer<typeof schemaPlace>;
-
 /**
- * Схема получения API для вывода одной витрины с подключенной валидацией
- * Также применяется при получении API при добавлении и редактировании
+ * Схема получения данных api для вывода одной витрины с подключенной валидацией
+ * Также применяется при получения данных api, при добавлении и редактировании
  */
 export const schemaGetPlace = z
   .object({
@@ -38,7 +36,7 @@ export const schemaGetPlace = z
   .merge(schemaValidate);
 
 /**
- * Схема получения API для вывода списка витрин с подключенной валидацией
+ * Схема получения данных api для вывода списка витрин с подключенной валидацией
  */
 export const schemaListPlace = z
   .object({
@@ -47,7 +45,7 @@ export const schemaListPlace = z
   .merge(schemaValidate);
 
 /**
- * Схема отправки API для добавления новой витрины
+ * Схема отправки данных api для добавления новой витрины
  * Удаляем поля, которые не применяются
  * Переопределяем тип некоторых полей
  */
@@ -64,13 +62,19 @@ const schemaRequestPostPlace = schemaPlace
     logo_dark: z.union([z.string(), z.instanceof(File)]).optional(),
     type: z.number(),
   });
-export type IRequestPostPlace = z.infer<typeof schemaRequestPostPlace>;
 
 /**
- * Схема отправки API для редактирования витрины
- * Это копия схемы добавления + добавлен ID редактируемой витрины
+ * Схема отправки api для редактирования витрины
+ * Это копия схемы добавления + добавлен id редактируемой витрины
  */
 const schemaRequestPutPlace = schemaRequestPostPlace.extend({
   id: z.number(),
 });
+
+/**
+ * Экспортируемые типы
+ */
+
+export type IPlace = z.infer<typeof schemaPlace>;
+export type IRequestPostPlace = z.infer<typeof schemaRequestPostPlace>;
 export type IRequestPutPlace = z.infer<typeof schemaRequestPutPlace>;

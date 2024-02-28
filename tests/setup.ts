@@ -1,9 +1,18 @@
-import * as matchers from '@testing-library/jest-dom/matchers';
-import { cleanup } from '@testing-library/react';
-import { afterEach, expect } from 'vitest';
+import { afterAll, afterEach, beforeAll } from 'vitest';
+import { server } from '../src/mocks/node.js';
 
-expect.extend(matchers);
+beforeAll(() => {
+  server.listen();
+});
 
 afterEach(() => {
-  cleanup();
+  server.resetHandlers();
+});
+
+afterAll(() => {
+  server.close();
+});
+
+server.events.on('request:start', ({ request }) => {
+  console.log('MSW intercepted:', request.method, request.url);
 });

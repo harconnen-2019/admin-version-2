@@ -1,5 +1,5 @@
 import { Button, Group, Space } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+import { ButtonBack } from './button-back';
 
 /**
  * Кнопка возврата с формы - назад
@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
  * @returns компонент кнопки белой
  */
 export function GroupButtonForm({ disabled }: Readonly<{ disabled: boolean }>) {
-  const navigate = useNavigate();
   return (
     <>
       <Space h={50} />
@@ -16,9 +15,7 @@ export function GroupButtonForm({ disabled }: Readonly<{ disabled: boolean }>) {
         <Button type="submit" variant="light" disabled={disabled}>
           Отправить форму
         </Button>
-        <Button type="button" variant="default" onClick={() => navigate(-1)}>
-          Вернуться назад
-        </Button>
+        <ButtonBack />
       </Group>
     </>
   );

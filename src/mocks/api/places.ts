@@ -1,7 +1,7 @@
 /* eslint-disable unicorn/no-null */
 /* eslint-disable sonarjs/no-duplicate-string */
-import { BASE_URL } from '@/shared/lib';
 import { HttpResponse, http } from 'msw';
+import { BASE_URL } from '../../shared/lib';
 
 const url = 'https://admin.rstream.tech';
 const api = `${BASE_URL}/places/item/`;

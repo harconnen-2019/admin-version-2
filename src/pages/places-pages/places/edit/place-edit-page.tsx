@@ -14,7 +14,9 @@ import { useParams } from 'react-router-dom';
 export default function PlaceEditPage() {
   const { placeId } = useParams();
   const updatePlace = useUpdatePlace();
-  const { place, error, isPending } = useGetPlace(placeId);
+  const { data, error, isPending } = useGetPlace(placeId);
+
+  const place = data?.places_item ?? undefined;
 
   const form = useForm<placeType.IRequestPutPlace>({
     initialValues: {

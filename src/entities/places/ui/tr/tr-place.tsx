@@ -1,10 +1,10 @@
-import { Badge, Table, Text } from '@mantine/core';
-import { Link } from 'react-router-dom';
+import { Badge, Table } from '@mantine/core';
 
 import { PATH_PAGE } from '@/pages/path';
 import { getData } from '@/shared/lib';
 import { ButtonDell } from '@/shared/ui';
 
+import { LinkAnchor } from '@/shared/ui/links/link-anchor';
 import { IPlace } from '../../api/types';
 import { SelectPlaceButton } from '../select/select-place-button';
 
@@ -36,9 +36,7 @@ export function TrPlace({ element, placeId, remove }: Readonly<IProperties>) {
         )}
       </Table.Td>
       <Table.Td>
-        <Link to={PATH_PAGE.place.edit(element.id)} style={{ textDecoration: 'none' }}>
-          <Text c="var(--mantine-primary-color-light-color)">{element.name}</Text>
-        </Link>
+        <LinkAnchor to={PATH_PAGE.place.edit(element.id)}>{element.name}</LinkAnchor>
       </Table.Td>
       <Table.Td>{getData(element.created)}</Table.Td>
       <Table.Td>{getData(element.modified)}</Table.Td>

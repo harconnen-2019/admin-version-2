@@ -2,49 +2,78 @@ import { modals } from '@mantine/modals';
 import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { placeApi } from '@/entities/places';
+import { authApi } from '@/entities/auth';
 import { PATH_PAGE } from '@/pages/path';
+import { ServiceFetch } from '@/shared/api';
+import { BASE_URL } from '@/shared/lib';
+import { schemaGetPlace, schemaListPlace } from '../api/types';
 
 const queryClient = new QueryClient();
 
+const _api = `${BASE_URL}/places/item/`;
+const placeApi = new ServiceFetch(_api, 'place');
+
 /**
  * Хук для витрины по ID
+ * Подключается схема zod витрины, и схема валидации апи
  * @param id ID витрины
  * @returns  place, status, error
  */
 export const useGetPlace = (id: string | undefined) => {
-  const { data, error, isPending } = useQuery({
+  return useQuery({
     queryKey: [placeApi.keyId, id],
-    queryFn: () => placeApi.get(id!),
+    queryFn: async () => {
+      const response = await placeApi.get(id!);
+      return schemaGetPlace.parse(response);
+    },
   });
-  const place = data?.places_item ?? undefined;
+};
 
-  return { place, error, isPending };
+/**
+ * Хук для выбора активной витрины по ID
+ * Подключается схема zod витрины, и схема валидации апи
+ * @returns  мутацию
+ */
+export const useSelectPlace = () => {
+  return useMutation({
+    mutationFn: async (id: string | number) => {
+      const response = await placeApi.get(id, { select: '1' });
+      return schemaGetPlace.parse(response);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [authApi.key] });
+    },
+  });
 };
 
 /**
  * Хук для вызова списка витрин
+ * Подключается схема zod списка витрин, и схема валидации апи
  * @returns  listPlaces, status, error
  */
 export const usePlaceList = () => {
-  const { status, data, error } = useQuery({
+  return useQuery({
     queryKey: [placeApi.keyList],
-    queryFn: () => placeApi.list(),
+    queryFn: async () => {
+      const response = await placeApi.list();
+      return schemaListPlace.parse(response);
+    },
   });
-  const listPlaces = data?.places_item_list ?? [];
-
-  return { listPlaces, status, error };
 };
 
 /**
  * Хук создания новой витрины, обновление списка витрин
+ * Подключается схема zod витрины, и схема валидации апи
  * После добавления переходит к списку
  * @returns Метод мутации
  */
 export const useCreatePlace = () => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: (values: FormData) => placeApi.create(values),
+    mutationFn: async (values: FormData) => {
+      const response = placeApi.createFormData(values);
+      return schemaGetPlace.parse(response);
+    },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: [placeApi.keyList] });
       if (data.success === 1) navigate(PATH_PAGE.place.root);
@@ -54,13 +83,17 @@ export const useCreatePlace = () => {
 
 /**
  * Хук отправки изменения витрины, обновление списка витрин
+ * Подключается схема zod витрины, и схема валидации апи
  * После добавления переходит к списку
  * @returns Метод мутации
  */
 export const useUpdatePlace = () => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: (values: FormData) => placeApi.update(values),
+    mutationFn: async (values: FormData) => {
+      const response = await placeApi.updateFormData(values);
+      return schemaGetPlace.parse(response);
+    },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: [placeApi.keyList] });
       if (data.success === 1) navigate(PATH_PAGE.place.root);
@@ -70,12 +103,16 @@ export const useUpdatePlace = () => {
 
 /**
  * Хук удаление витрины, обновление списка витрин
+ * Подключается схема zod витрины, и схема валидации апи
  * Вызывает модальное окно для подтверждения
  * @returns Модальное окно с методом удаления витрины
  */
 export const useRemovePlace = () => {
   const { mutate: removePlace } = useMutation({
-    mutationFn: (id: string | number) => placeApi.remove(id),
+    mutationFn: async (id: string | number) => {
+      const response = await placeApi.remove(id);
+      return schemaGetPlace.parse(response);
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [placeApi.keyList] });
     },

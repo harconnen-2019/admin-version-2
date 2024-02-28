@@ -8,10 +8,13 @@ import { usePlaceTypeList } from '../../hooks/use-place-types-query';
  * @param root0.getInputProps поле состояния формы
  * @returns поле select
  */
-export function SelectPlaceTypes({ getInputProps }: { getInputProps: GetInputPropsReturnType }) {
+export function SelectPlaceTypes({
+  getInputProps,
+}: Readonly<{ getInputProps: GetInputPropsReturnType }>) {
   const { listPlaceTypes, status, error } = usePlaceTypeList();
 
-  if (status === 'pending') return <Skeleton height={36} w={300} radius="sm" />;
+  if (status === 'pending')
+    return <Skeleton height={36} w={300} radius="sm" data-testid="loading" />;
 
   if (error)
     return (
