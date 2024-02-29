@@ -2,9 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { authApi } from '@/entities/auth';
+import { authApi, useAuth } from '@/entities/auth';
 import { PATH_PAGE } from '@/pages/path';
-import { useAuth } from '@/shared/hooks';
 
 /**
  * Проверяем данные из сессии каждый раз (так решили)

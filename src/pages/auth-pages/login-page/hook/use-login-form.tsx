@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { authApi } from '@/entities/auth';
+import { authApi, useAuth } from '@/entities/auth';
 import { PATH_PAGE } from '@/pages/path';
-import { useAuth } from '@/shared/hooks';
 
 /**
  * ХУК для страницы авторизации

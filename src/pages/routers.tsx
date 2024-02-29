@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { AuthProvider } from '@/shared/context';
+import { AuthProvider } from '@/entities/auth';
 
 import { LoginPage } from './auth-pages';
 import { DashboardPage } from './dashboard-page';
