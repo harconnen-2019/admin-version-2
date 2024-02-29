@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { AuthProvider } from '@/entities/auth';
+import { AuthProvider, RequireAuth } from '@/entities/auth';
 
 import { LoginPage } from './auth-pages';
 import { DashboardPage } from './dashboard-page';
@@ -27,7 +27,14 @@ export function Routers() {
   return (
     <AuthProvider>
       <Routes>
-        <Route path={PATH_PAGE.root} element={<Layout />}>
+        <Route
+          path={PATH_PAGE.root}
+          element={
+            <RequireAuth>
+              <Layout />
+            </RequireAuth>
+          }
+        >
           <Route index element={<DashboardPage />} />
           <Route path={PATH_PAGE.page500} element={<ServerErrorPage />} />
           {privateRouter}

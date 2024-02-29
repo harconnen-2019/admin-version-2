@@ -2,7 +2,6 @@ import { modals } from '@mantine/modals';
 import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { authApi } from '@/entities/auth';
 import { PATH_PAGE } from '@/pages/path';
 import { ServiceFetch } from '@/shared/api';
 import { BASE_URL } from '@/shared/lib';
@@ -41,7 +40,7 @@ export const useSelectPlace = () => {
       return schemaGetPlace.parse(response);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [authApi.key] });
+      queryClient.invalidateQueries({ queryKey: ['session'] });
     },
   });
 };

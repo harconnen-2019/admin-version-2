@@ -3,10 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { AppShell, Box, Space } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
-import { SpinnerPage } from '@/shared/ui';
-
 import { Header } from './header/header';
-import { useLayout } from './hooks';
 // import { Navbar } from './navbar/navbar';
 
 /**
@@ -15,13 +12,6 @@ import { useLayout } from './hooks';
  */
 export function Layout() {
   const [opened, { toggle }] = useDisclosure();
-
-  const { data, isLoading } = useLayout();
-
-  // Показываем спиннер пока подгружается сессия и пока не придут данные
-  if (isLoading || data?.success !== 1) {
-    return <SpinnerPage />;
-  }
 
   return (
     <AppShell
