@@ -1,28 +1,21 @@
 import { HttpResponse, http } from 'msw';
-import { BASE_URL } from '../../shared/lib';
+
+import { BASE_URL } from '@/shared/lib';
+import { database } from '../database/database';
 
 const api = `${BASE_URL}/places/type/`;
 
-const list = {
+export const databaseType = database.type.create({ id: 1 });
+database.type.create({ id: 2 });
+database.type.create({ id: 3 });
+
+const out = {
   success: 1,
-  places_type_list: [
-    {
-      id: 1,
-      created: '2023-08-16T14:32:47.160691Z',
-      modified: '2023-08-16T14:32:47.160714Z',
-      name: 'site',
-    },
-    {
-      id: 2,
-      created: '2023-08-16T14:32:47.160691Z',
-      modified: '2023-08-16T14:32:47.160714Z',
-      name: 'site-test',
-    },
-  ],
+  places_type_list: database.type.getAll(),
 };
 
 const getPlacesTypesList = http.patch(api, () => {
-  return HttpResponse.json(list);
+  return HttpResponse.json(out);
 });
 
 export const httpPlacesType = [getPlacesTypesList];
