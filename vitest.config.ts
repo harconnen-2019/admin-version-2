@@ -6,7 +6,7 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     root: '.',
-    setupFiles: ['./tests/setup.ts'],
+    setupFiles: ['./test-utils/setup.ts'],
     include: ['./src/**/*.{test,spec}.?(c|m)[jt]s?(x)'],
     exclude: [
       '**/node_modules/**',
@@ -24,12 +24,14 @@ export default defineConfig({
         '**/types.ts',
         '.eslintrc.cjs',
         'postcss.config.cjs',
-        'vitest.setup.ts',
         '**/*.d.ts',
       ],
     },
   },
   resolve: {
-    alias: [{ find: '@', replacement: resolve('.', './src') }],
+    alias: [
+      { find: '@test-utils', replacement: resolve('.', './test-utils') },
+      { find: '@', replacement: resolve('.', './src') },
+    ],
   },
 });

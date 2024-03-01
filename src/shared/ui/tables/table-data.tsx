@@ -7,16 +7,17 @@ interface IProperties {
   isLoading: boolean;
   tableHead?: { [key: string]: string | number }[];
   children: ReactNode;
-  error: Error | null;
+  error: Error | null | undefined;
   // если пустая таблица выводится предупреждение
   empty: boolean | undefined;
 }
 
 /**
  * Выводит списочные данные в таблице
- * Если данные не получены выводит спиннер
- * @param properties { children, isLoading, tableHead, empty }
- * @returns таблицу, спиннер, предложение заполнить
+ * Если данные не получены выводит спиннер по количеству заголовков
+ * Таблица усложнена, чтобы ошибки и т.д. выводились внутри таблицы а не вместо нее
+ * @param properties { children, isLoading, tableHead, empty, error }
+ * @returns таблицу, спиннер, предложение заполнить, ошибку
  */
 export function TableData(properties: Readonly<IProperties>) {
   const { children, error, isLoading, tableHead, empty } = properties;

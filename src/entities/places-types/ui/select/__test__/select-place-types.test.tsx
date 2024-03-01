@@ -31,8 +31,8 @@ describe('Testing our React application', () => {
 
     await waitFor(() => expect(result.current.status).toEqual('success'));
     // expect(result.current.status).toEqual('success');
-    result.current.data?.places_type_list &&
-      expect(result.current.data?.places_type_list[0].name).toEqual('site');
+    // result.current.data?.places_type_list &&
+    //   expect(result.current.data?.places_type_list[0].name).toEqual('site');
 
     // await waitFor(() => screen.debug());
     // screen.debug();

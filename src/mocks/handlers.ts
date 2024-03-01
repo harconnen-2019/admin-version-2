@@ -10,7 +10,7 @@ const apiType = `${BASE_URL}/places/type/`;
 
 initDataBase();
 
-console.log(database.place.getAll());
+// console.log(database.place.getAll());
 
 export const handlers = [
   http.get(apiSession, () => {
