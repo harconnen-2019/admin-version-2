@@ -32,3 +32,21 @@ export const database = factory({
   },
   user: { id: primaryKey(Number), username: () => faker.person.firstName() },
 });
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const initDataBase = () => {
+  const user = database.user.create({ id: 1 });
+  const databaseType = database.type.create({ id: 1 });
+  database.type.create({ id: 2 });
+  const databasePlace = database.place.create({ id: 1, type: databaseType });
+
+  for (let index = 2; index < 6; index++) {
+    database.place.create({ id: index, type: databaseType });
+  }
+
+  database.session.create({
+    id: 'session-id',
+    place: databasePlace,
+    user: user,
+  });
+};

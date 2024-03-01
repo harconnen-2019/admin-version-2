@@ -1,13 +1,11 @@
 import { modals } from '@mantine/modals';
-import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { PATH_PAGE } from '@/pages/path';
 import { ServiceFetch } from '@/shared/api';
 import { BASE_URL } from '@/shared/lib';
 import { schemaGetPlace, schemaListPlace } from '../api/types';
-
-const queryClient = new QueryClient();
 
 const _api = `${BASE_URL}/places/item/`;
 const placeApi = new ServiceFetch(_api, 'place');
@@ -34,6 +32,7 @@ export const useGetPlace = (id: string | undefined) => {
  * @returns  мутацию
  */
 export const useSelectPlace = () => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (id: string | number) => {
       const response = await placeApi.get(id, { select: '1' });
@@ -68,6 +67,7 @@ export const usePlaceList = () => {
  */
 export const useCreatePlace = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (values: FormData) => {
       const response = placeApi.createFormData(values);
@@ -88,6 +88,7 @@ export const useCreatePlace = () => {
  */
 export const useUpdatePlace = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (values: FormData) => {
       const response = await placeApi.updateFormData(values);
@@ -107,6 +108,7 @@ export const useUpdatePlace = () => {
  * @returns Модальное окно с методом удаления витрины
  */
 export const useRemovePlace = () => {
+  const queryClient = useQueryClient();
   const { mutate: removePlace } = useMutation({
     mutationFn: async (id: string | number) => {
       const response = await placeApi.remove(id);

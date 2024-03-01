@@ -5,9 +5,9 @@ import { database } from '../database/database';
 
 const api = `${BASE_URL}/places/type/`;
 
-export const databaseType = database.type.create({ id: 1 });
-database.type.create({ id: 2 });
-database.type.create({ id: 3 });
+// export const databaseType = database.type.create({ id: 1 });
+// database.type.create({ id: 2 });
+// database.type.create({ id: 3 });
 
 const out = {
   success: 1,

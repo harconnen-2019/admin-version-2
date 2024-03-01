@@ -3,31 +3,11 @@
 import { HttpResponse, http } from 'msw';
 import { BASE_URL } from '../../shared/lib';
 import { database } from '../database/database';
-import { databaseType } from './places-types';
 
 const api = `${BASE_URL}/places/item/`;
 
-export const databasePlace = database.place.create({ id: 1, type: databaseType });
-
-for (let index = 2; index < 6; index++) {
-  database.place.create({ id: index, type: databaseType });
-}
-
-const outList = {
-  success: 1,
-  places_item_list: database.place.getAll(),
-};
-
-const outGet = {
-  success: 1,
-  places_item: database.place.findFirst({
-    where: {
-      id: {
-        equals: 1,
-      },
-    },
-  }),
-};
+const outGet = {};
+const outList = {};
 
 const getPlace = http.get(api, () => {
   return HttpResponse.json(outGet);
@@ -45,7 +25,18 @@ const putPlaces = http.put(api, () => {
   return HttpResponse.json(outGet);
 });
 
-const deletePlace = http.delete(api, () => {
+const deletePlace = http.delete(api, ({ request }) => {
+  const url = new URL(request.url);
+  const productId = url.searchParams.get('id');
+
+  database.place.delete({
+    where: {
+      id: {
+        equals: Number(productId),
+      },
+    },
+  });
+
   return HttpResponse.json(outGet);
 });
 

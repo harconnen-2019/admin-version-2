@@ -1,11 +1,9 @@
-import { QueryClient, useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { http } from '@/shared/api';
 import { BASE_URL } from '@/shared/lib';
 import { useNavigate } from 'react-router-dom';
 import { IRequestLogin, schemaSession } from '../api/types';
-
-const queryClient = new QueryClient();
 
 const _api = {
   login: `${BASE_URL}/users/login/`,
@@ -35,6 +33,7 @@ export const useGetAuth = () => {
  */
 export const useLogin = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (value: IRequestLogin) => {
