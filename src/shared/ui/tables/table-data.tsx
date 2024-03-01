@@ -1,5 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
+import { DEBUG } from '@/shared/lib';
 import { Skeleton, Table } from '@mantine/core';
 import { ErrorMessage } from '../error-message/error-message';
 
@@ -68,6 +69,38 @@ export function TableData(properties: Readonly<IProperties>) {
       <Table.Tr>{spinnerTd}</Table.Tr>
     </>
   );
+
+  /**
+   * Помощник, чтобы число заголовков совпадало с числом ячеек в данных
+   * Работает только на локальном компьютере
+   * Colspan не отслеживает, но все равно помогает хорошо
+   */
+  useEffect(() => {
+    /**
+     * Вспомогательная функция, для вставки элемента
+     * @param referenceNode элемент
+     * @param newNode элемент
+     */
+    function insertAfter(referenceNode: HTMLTableElement | null, newNode: Node) {
+      referenceNode?.parentNode?.insertBefore(newNode, referenceNode.nextSibling);
+    }
+    if (DEBUG) {
+      setTimeout(() => {
+        const td = document.querySelectorAll('tbody > tr:first-child > .mantine-Table-td');
+
+        if (tableHead?.length !== td.length && !document.querySelector('[data-mute-note]')) {
+          const table = document.querySelector('table');
+
+          const element = document.createElement('span');
+          element.dataset.muteNote = '';
+          element.setAttribute('style', 'color: red');
+          element.innerHTML = '😱 Число заголовков и столбцов данных не совпадают';
+
+          insertAfter(table, element);
+        }
+      }, 1000);
+    }
+  }, [tableHead]);
 
   return (
     <Table horizontalSpacing="md" verticalSpacing="md" highlightOnHover>
