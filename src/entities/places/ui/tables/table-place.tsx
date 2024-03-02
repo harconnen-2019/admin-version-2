@@ -9,14 +9,14 @@ import { SelectPlaceButton } from '../select/select-place-button';
 
 interface IProperties {
   status: string;
-  error: Error | null;
+  error: Error | null | undefined;
   data: IPlace[];
   placeId: number | undefined;
   remove: (id: number, name: string) => void;
 }
 
 /**
- * Таблица с данными
+ * Таблица с данными витрины
  * @param root0 пропсы
  * @param root0.data список данных
  * @param root0.error ошибка

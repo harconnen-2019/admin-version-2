@@ -14,6 +14,8 @@ interface IProperties {
  * @returns JSX Element
  */
 export function LinkAnchor({ to, children }: Readonly<IProperties>) {
+  if (!children) return;
+
   return (
     <Link to={to} style={{ textDecoration: 'none' }}>
       <Text c="var(--mantine-primary-color-light-color)">{children}</Text>

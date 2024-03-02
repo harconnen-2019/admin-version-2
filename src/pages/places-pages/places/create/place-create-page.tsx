@@ -1,7 +1,7 @@
 import { useForm } from '@mantine/form';
 
 import { FormPlaceAdd, placeType, useCreatePlace } from '@/entities/places';
-import { defaultValidate, getFormDate } from '@/shared/lib';
+import { defaultValidate, objectToFormDate } from '@/shared/lib';
 import { ErrorMessage, GroupButtonForm, TitlePage } from '@/shared/ui';
 
 /**
@@ -40,7 +40,7 @@ export default function PlaceCreatePage() {
       <TitlePage>Новая витрина</TitlePage>
       <form
         onSubmit={form.onSubmit((values) => {
-          return createPlace.mutate(getFormDate(values));
+          return createPlace.mutate(objectToFormDate(values));
         })}
       >
         <FormPlaceAdd form={form} />

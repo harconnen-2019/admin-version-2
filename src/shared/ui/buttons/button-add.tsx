@@ -17,6 +17,7 @@ interface IProperties {
  * @returns компонент зеленой кнопки со ссылкой
  */
 export function ButtonAdd({ children, link }: Readonly<IProperties>) {
+  if (!children) return;
   return (
     <Link to={link}>
       <Button variant="light" color="green" leftSection={<IconCirclePlus size={18} />}>

@@ -125,12 +125,37 @@ export function getRandom(min: number, max: number) {
  * @param state исходный объект
  * @returns FormData
  */
-export function getFormDate(state: { [x: string]: string | number | null | Blob }) {
+export function objectToFormDate(state: {
+  [x: string]: string | number | null | Blob | undefined;
+}) {
   const result = new FormData();
   for (const string_ of Object.keys(state)) {
     state[string_] && result.append(string_, String(state[string_]));
   }
   return result;
+}
+
+/**
+ * Удаляем поля (картинок), если в них значение string
+ * это значит, что они пустые или не изменялись и отправлять на сервер их не нужно
+ * @param state состояние формы
+ * @param array список полей для пометки undefined
+ * @returns объект с помеченными полями
+ */
+export function removeImagesIfString(
+  state: { [x: string]: string | number | null | Blob | undefined },
+  array: string[],
+) {
+  const object = { ...state };
+
+  for (const key of array) {
+    const currentKeyValue = object[key];
+    if (typeof currentKeyValue === 'string') {
+      object[key] = undefined;
+    }
+  }
+
+  return object;
 }
 
 /**

@@ -1,11 +1,11 @@
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+
 import { useForm } from '@mantine/form';
 
 import { FormPlaceAdd, placeType, useGetPlace, useUpdatePlace } from '@/entities/places';
-import { defaultValidate, getFormDate } from '@/shared/lib';
-import { ErrorMessage, GroupButtonForm, TitlePage } from '@/shared/ui';
-import { Box, Loader, LoadingOverlay } from '@mantine/core';
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { defaultValidate, objectToFormDate, removeImagesIfString } from '@/shared/lib';
+import { ErrorMessage, GroupButtonForm, PageLoadingOverlay, TitlePage } from '@/shared/ui';
 
 /**
  * Страница добавления новой витрины
@@ -17,6 +17,7 @@ export default function PlaceEditPage() {
   const { data, error, isPending } = useGetPlace(placeId);
 
   const place = data?.places_item ?? undefined;
+  const arrayImagesForm = ['favicon', 'og_img', 'logo_light', 'logo_dark'];
 
   const form = useForm<placeType.IRequestPutPlace>({
     initialValues: {
@@ -64,36 +65,12 @@ export default function PlaceEditPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [place]);
 
-  /**
-   * Удаляем поля картинок, если в них значение string
-   * это значит, что они не изменялись и отправлять на сервер их не нужно
-   * @param state состояние формы
-   * @returns FormData
-   */
-  const removeImgIfString = (state: placeType.IRequestPutPlace) => {
-    const object = { ...state };
-
-    if (object.favicon !== '' && typeof object.favicon === 'string') {
-      object.favicon = undefined;
-    }
-    if (object.og_img !== '' && typeof object.og_img === 'string') {
-      object.og_img = undefined;
-    }
-    if (object.logo_light !== '' && typeof object.logo_light === 'string') {
-      object.logo_light = undefined;
-    }
-    if (object.logo_dark !== '' && typeof object.logo_dark === 'string') {
-      object.logo_dark = undefined;
-    }
-
-    return getFormDate(object);
-  };
-
   return (
-    <Box pos="relative">
-      <LoadingOverlay visible={isPending} loaderProps={{ children: <Loader size={30} /> }} />
+    <PageLoadingOverlay isPending={isPending}>
+      <TitlePage subtitle={form.values.name} divider>
+        Редактировать витрину
+      </TitlePage>
 
-      <TitlePage>Редактировать витрину</TitlePage>
       {error ? (
         <ErrorMessage error={error} buttonBack>
           Редактирование невозможно
@@ -101,7 +78,8 @@ export default function PlaceEditPage() {
       ) : (
         <form
           onSubmit={form.onSubmit((values) => {
-            return updatePlace.mutate(removeImgIfString(values));
+            const valuesNoImages = removeImagesIfString(values, arrayImagesForm);
+            return updatePlace.mutate(objectToFormDate(valuesNoImages));
           })}
         >
           <FormPlaceAdd form={form} />
@@ -111,6 +89,6 @@ export default function PlaceEditPage() {
           <GroupButtonForm disabled={updatePlace.isPending} />
         </form>
       )}
-    </Box>
+    </PageLoadingOverlay>
   );
 }
