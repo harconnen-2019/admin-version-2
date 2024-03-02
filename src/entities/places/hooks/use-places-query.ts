@@ -70,7 +70,7 @@ export const useCreatePlace = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (values: FormData) => {
-      const response = placeApi.createFormData(values);
+      const response = await placeApi.createFormData(values);
       return schemaGetPlace.parse(response);
     },
     onSuccess: (data) => {

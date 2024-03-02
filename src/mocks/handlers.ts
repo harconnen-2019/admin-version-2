@@ -26,6 +26,7 @@ export const handlers = [
     };
     return HttpResponse.json(outSession);
   }),
+
   http.post(apiLogin, () => {
     const outSession = {
       success: 1,
@@ -39,6 +40,7 @@ export const handlers = [
     };
     return HttpResponse.json(outSession);
   }),
+
   http.get(apiPlace, () => {
     const outGet = {
       success: 1,
@@ -52,14 +54,30 @@ export const handlers = [
     };
     return HttpResponse.json(outGet);
   }),
+
   http.patch(apiPlace, () => {
     const outList = {
       success: 1,
       places_item_list: database.place.getAll(),
     };
-    console.log(outList);
     return HttpResponse.json(outList);
   }),
+
+  http.post(apiPlace, () => {
+    const outGet = {
+      success: 1,
+      places_item: database.place.findFirst({
+        where: {
+          id: {
+            equals: 1,
+          },
+        },
+      }),
+    };
+
+    return HttpResponse.json(outGet);
+  }),
+
   http.delete(apiPlace, ({ request }) => {
     const url = new URL(request.url);
     const productId = url.searchParams.get('id');
@@ -85,6 +103,7 @@ export const handlers = [
 
     return HttpResponse.json(outGet);
   }),
+
   http.patch(apiType, () => {
     const out = {
       success: 1,

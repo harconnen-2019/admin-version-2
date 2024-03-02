@@ -29,11 +29,7 @@ export default function PlaceCreatePage() {
   return (
     <>
       <TitlePage>Новая витрина</TitlePage>
-      <form
-        onSubmit={form.onSubmit((values) => {
-          return createPlace.mutate(objectToFormDate(values));
-        })}
-      >
+      <form onSubmit={form.onSubmit((values) => createPlace.mutate(objectToFormDate(values)))}>
         <FormPlaceAdd form={form} />
         {
           // Ошибка отправки формы
