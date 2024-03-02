@@ -1,4 +1,5 @@
-import { Box, NativeSelect, Skeleton } from '@mantine/core';
+import { CustomLoadingOverlay } from '@/shared/ui';
+import { Box, NativeSelect } from '@mantine/core';
 import { GetInputPropsReturnType } from 'node_modules/@mantine/form/lib/types';
 import { usePlaceTypeList } from '../../hooks/use-place-types-query';
 
@@ -16,9 +17,6 @@ export function SelectPlaceTypes({ getInputProps }: Readonly<IProperties>) {
   const { data, status, error } = usePlaceTypeList();
   const listPlaceTypes = data?.places_type_list ?? [];
 
-  if (status === 'pending')
-    return <Skeleton height={36} w={300} radius="sm" data-testid="loading" />;
-
   if (error)
     return (
       <Box c="red">
@@ -28,7 +26,7 @@ export function SelectPlaceTypes({ getInputProps }: Readonly<IProperties>) {
     );
 
   return (
-    status === 'success' && (
+    <CustomLoadingOverlay isPending={status === 'pending'} size={20}>
       <NativeSelect withAsterisk label="Тип витрины" {...getInputProps} mt="md" w={300}>
         <option disabled value="0">
           Выбрать...
@@ -39,6 +37,6 @@ export function SelectPlaceTypes({ getInputProps }: Readonly<IProperties>) {
           </option>
         ))}
       </NativeSelect>
-    )
+    </CustomLoadingOverlay>
   );
 }

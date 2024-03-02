@@ -3,92 +3,80 @@ import { useParams } from 'react-router-dom';
 
 import { useForm } from '@mantine/form';
 
-import { FormPlaceAdd, placeType, useGetPlace, useUpdatePlace } from '@/entities/places';
-import { defaultValidate, objectToFormDate, removeImagesIfString } from '@/shared/lib';
-import { ErrorMessage, GroupButtonForm, PageLoadingOverlay, TitlePage } from '@/shared/ui';
+import {
+  FormPlaceAdd,
+  placeFormValidate,
+  placeInitialPut,
+  placeLoadFromApi,
+  placeType,
+  useGetPlace,
+  useUpdatePlace,
+} from '@/entities/places';
+import { objectToFormDate, removeImagesIfString } from '@/shared/lib';
+import { CustomLoadingOverlay, ErrorMessage, GroupButtonForm, TitlePage } from '@/shared/ui';
 
 /**
- * Страница добавления новой витрины
- * @returns форма добавления витрины
+ * Страница редактирования витрины
+ * @returns страница
  */
 export default function PlaceEditPage() {
   const { placeId } = useParams();
   const updatePlace = useUpdatePlace();
-  const { data, error, isPending } = useGetPlace(placeId);
 
+  const { data, error, status } = useGetPlace(placeId);
   const place = data?.places_item ?? undefined;
+
+  // Картинки в форме, которые имеют типизацию string или File
   const arrayImagesForm = ['favicon', 'og_img', 'logo_light', 'logo_dark'];
 
+  /**
+   * Инициализация состояния формы редактирования
+   * Указание полей для валидации
+   */
   const form = useForm<placeType.IRequestPutPlace>({
-    initialValues: {
-      id: Number(placeId!),
-      name: '',
-      domain: '',
-      type: 0,
-      template: '',
-      color_scheme: 'default',
-      favicon: undefined,
-      og_img: undefined,
-      logo_light: undefined,
-      logo_dark: undefined,
-      counter_head: '',
-      counter_body: '',
-      thankyou_type: '',
-    },
-
-    validate: {
-      type: defaultValidate,
-      name: defaultValidate,
-      domain: defaultValidate,
-      template: defaultValidate,
-    },
+    initialValues: placeInitialPut(placeId),
+    validate: placeFormValidate,
   });
 
+  /**
+   * Получаем данные из api и заменяем ими инициализированные данные в форме
+   * Линтер ругается, хочет подключить в массив "form", но она там не нужна
+   */
   useEffect(() => {
-    if (!place) return;
-
-    form.setValues({
-      id: place.id,
-      name: place.name,
-      domain: place.domain,
-      type: place.type.id,
-      template: place.template,
-      color_scheme: place.color_scheme,
-      favicon: place.favicon ?? undefined,
-      og_img: place.og_img ?? undefined,
-      logo_light: place.logo_light ?? undefined,
-      logo_dark: place.logo_dark ?? undefined,
-      counter_head: place.counter_head,
-      counter_body: place.counter_body,
-      thankyou_type: place.thankyou_type,
-    });
+    status === 'success' && place && form.setValues(placeLoadFromApi(place));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [place]);
 
   return (
-    <PageLoadingOverlay isPending={isPending}>
+    <CustomLoadingOverlay isPending={status === 'pending'}>
       <TitlePage subtitle={form.values.name} divider>
         Редактировать витрину
       </TitlePage>
 
-      {error ? (
-        <ErrorMessage error={error} buttonBack>
-          Редактирование невозможно
-        </ErrorMessage>
-      ) : (
-        <form
-          onSubmit={form.onSubmit((values) => {
-            const valuesNoImages = removeImagesIfString(values, arrayImagesForm);
-            return updatePlace.mutate(objectToFormDate(valuesNoImages));
-          })}
-        >
-          <FormPlaceAdd form={form} />
-          {updatePlace.isError && (
-            <ErrorMessage error={updatePlace.error}>Форма не отправлена</ErrorMessage>
-          )}
-          <GroupButtonForm disabled={updatePlace.isPending} />
-        </form>
-      )}
-    </PageLoadingOverlay>
+      {
+        // Ошибка загрузки данных для формы
+        error ? (
+          <ErrorMessage error={error} buttonBack>
+            Редактирование невозможно
+          </ErrorMessage>
+        ) : (
+          <form
+            onSubmit={form.onSubmit((values) => {
+              const valuesNoImages = removeImagesIfString(values, arrayImagesForm);
+              return updatePlace.mutate(objectToFormDate(valuesNoImages));
+            })}
+          >
+            <FormPlaceAdd form={form} />
+            {
+              // Ошибка отправки формы
+              updatePlace.isError && (
+                <ErrorMessage error={updatePlace.error}>Форма не отправлена</ErrorMessage>
+              )
+            }
+            <GroupButtonForm disabled={updatePlace.isPending} />
+          </form>
+        )
+      }
+    </CustomLoadingOverlay>
   );
 }

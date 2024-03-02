@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Button } from '@mantine/core';
+import { Button, Space } from '@mantine/core';
 import { IconCirclePlus } from '@tabler/icons-react';
 
 interface IProperties {
@@ -19,10 +19,13 @@ interface IProperties {
 export function ButtonAdd({ children, link }: Readonly<IProperties>) {
   if (!children) return;
   return (
-    <Link to={link}>
-      <Button variant="light" color="green" leftSection={<IconCirclePlus size={18} />}>
-        {children}
-      </Button>
-    </Link>
+    <>
+      <Link to={link}>
+        <Button variant="light" color="green" leftSection={<IconCirclePlus size={18} />}>
+          {children}
+        </Button>
+      </Link>
+      <Space h="xl" />
+    </>
   );
 }

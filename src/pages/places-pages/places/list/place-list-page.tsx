@@ -1,5 +1,3 @@
-import { Space } from '@mantine/core';
-
 import { useAuth } from '@/entities/auth';
 import { TablePlace, usePlaceList, useRemovePlace } from '@/entities/places';
 import { PATH_PAGE } from '@/pages/path';
@@ -7,7 +5,7 @@ import { ButtonAdd, TitlePage } from '@/shared/ui';
 
 /**
  * Страница со списком витрин в табличном варианте
- * @returns таблица с витринами
+ * @returns страница
  */
 export default function PlaceListPage() {
   const { place } = useAuth();
@@ -21,7 +19,6 @@ export default function PlaceListPage() {
     <>
       <TitlePage>Витрины</TitlePage>
       <ButtonAdd link={PATH_PAGE.place.create}>Новая витрина</ButtonAdd>
-      <Space h="xl" />
       <TablePlace
         status={status}
         error={error}
