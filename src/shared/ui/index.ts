@@ -5,6 +5,7 @@ export * from './buttons/button-edit';
 export * from './buttons/button-icon';
 export * from './buttons/group-buttons-form';
 export * from './error-message/error-message';
+export * from './forms/img-upload/img-upload';
 export * from './links/link-anchor';
 export * from './spinners/custom-loading-overlay';
 export * from './spinners/loadable';

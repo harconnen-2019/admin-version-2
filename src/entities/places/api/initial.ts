@@ -46,7 +46,7 @@ export const placeLoadFromApi = (api: IPlace) => {
   const result = { ...(initial as IRequestPutPlace) };
   for (const key in result) {
     if (key === 'type') {
-      result[key as keyof IRequestPutPlace] = api[key].id as never;
+      result['type'] = api['type'].id;
     } else {
       result[key as keyof IRequestPutPlace] = api[key as keyof IPlace] as never;
     }

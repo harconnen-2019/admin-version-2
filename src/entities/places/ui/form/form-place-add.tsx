@@ -15,8 +15,8 @@ import { UseFormReturnType } from '@mantine/form';
 import { useState } from 'react';
 
 import { SelectPlaceTypes } from '@/entities/places-types';
+import { ImageUpload } from '@/shared/ui';
 import { IRequestPostPlace, IRequestPutPlace } from '../../api/types';
-import { PlaceImgUpload } from './place-img-upload';
 
 const segments = [
   { label: 'Витрина', value: '1' },
@@ -119,7 +119,7 @@ export function FormPlaceAdd({ form }: Readonly<IProperties>) {
       {segment === '2' && (
         <Grid grow gutter="sm" mt="xl">
           <Grid.Col span={6}>
-            <PlaceImgUpload
+            <ImageUpload
               click={() => setFieldValue('favicon', undefined)}
               formValue={values['favicon']}
               getInputProps={getInputProps('favicon')}
@@ -130,7 +130,7 @@ export function FormPlaceAdd({ form }: Readonly<IProperties>) {
           </Grid.Col>
 
           <Grid.Col span={6}>
-            <PlaceImgUpload
+            <ImageUpload
               click={() => setFieldValue('og_img', undefined)}
               formValue={values.og_img}
               getInputProps={getInputProps('og_img')}
@@ -139,7 +139,7 @@ export function FormPlaceAdd({ form }: Readonly<IProperties>) {
           </Grid.Col>
 
           <Grid.Col span={6}>
-            <PlaceImgUpload
+            <ImageUpload
               click={() => setFieldValue('logo_light', undefined)}
               formValue={values.logo_light}
               getInputProps={getInputProps('logo_light')}
@@ -148,7 +148,7 @@ export function FormPlaceAdd({ form }: Readonly<IProperties>) {
           </Grid.Col>
 
           <Grid.Col span={6}>
-            <PlaceImgUpload
+            <ImageUpload
               click={() => setFieldValue('logo_dark', undefined)}
               formValue={values.logo_dark}
               getInputProps={getInputProps('logo_dark')}
