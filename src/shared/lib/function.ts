@@ -25,7 +25,7 @@ export function getCountPages(number_: number | undefined, limit: number = DEFAU
  * @param string_ дата в формате "2022-10-14T12:23:36.764855Z"
  * @returns Дата на русском "14 октября 22 г."
  */
-export function getData(string_: string): string {
+export function getDate(string_: Date): string {
   return new Date(string_).toLocaleString('ru', {
     year: '2-digit',
     month: 'long',
@@ -119,3 +119,54 @@ export function getRandom(min: number, max: number) {
   }
   return Math.floor(Math.random() * (max - min) + min);
 }
+
+/**
+ * Преобразование объекта в формат FormData
+ * @param state исходный объект
+ * @returns FormData
+ */
+export function objectToFormDate(state: {
+  [x: string]: string | number | null | Blob | undefined;
+}) {
+  const result = new FormData();
+  for (const string_ of Object.keys(state)) {
+    state[string_] && result.append(string_, String(state[string_]));
+  }
+  return result;
+}
+
+/**
+ * Удаляем поля (картинок), если в них значение string
+ * это значит, что они пустые или не изменялись и отправлять на сервер их не нужно
+ * @param state состояние формы
+ * @param array список полей для пометки undefined
+ * @returns объект с помеченными полями
+ */
+export function removeImagesIfString(
+  state: { [x: string]: string | number | null | Blob | undefined },
+  array: string[],
+) {
+  const object = { ...state };
+
+  for (const key of array) {
+    const currentKeyValue = object[key];
+    if (typeof currentKeyValue === 'string') {
+      object[key] = undefined;
+    }
+  }
+
+  return object;
+}
+
+/**
+ * Валидация полей формы по умолчанию
+ * @param value элемент useForm
+ * @returns текст
+ */
+export const defaultValidate = (value: string | number) => {
+  if (typeof value === 'string') {
+    return value.length === 0 ? 'Обязательно для заполнения' : undefined;
+  } else {
+    return value === 0 ? 'Обязательно для заполнения' : undefined;
+  }
+};

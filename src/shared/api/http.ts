@@ -2,6 +2,8 @@
 https://eckertalex.dev/blog/typescript-fetch-wrapper
 */
 
+import { DEBUG } from '../lib';
+
 /**
  * Формирует HTTP запрос к серверу, применяет настройки, возвращает данные в формате json
  * @param path путь к api
@@ -11,10 +13,8 @@ https://eckertalex.dev/blog/typescript-fetch-wrapper
 async function _http<T>(path: string, config: RequestInit): Promise<T> {
   const request = new Request(path, config);
   const response = await fetch(request);
-  // Log.log('Log: ', { path, request, response });
 
   if (!response.ok) {
-    // Log.warn('Log:', response);
     throw new Error(`${response.status} (${response.statusText})`);
   }
 
@@ -28,7 +28,8 @@ async function _http<T>(path: string, config: RequestInit): Promise<T> {
 }
 
 /**
- * Формирование запроса для получения данных и определение типов
+ * Формирование запроса для получения данных
+ * Тип <T> применяется для полученных данных (под вопросом, так как в этом проекте применяется ZOD)
  * @param method Метод запроса
  * @returns Готовый запрос к api
  */
@@ -40,7 +41,9 @@ function newRequest(method: 'GET' | 'LIST' | 'PATCH' | 'DELETE') {
 }
 
 /**
- * Формирование запроса для отправки и получения данных и определение типов
+ * Формирование запроса для отправки и получения данных
+ * Тип <U> применяется для полученных данных (под вопросом, так как в этом проекте применяется ZOD)
+ * Тип <T> применяется для отправляемых данных
  * @param method Метод запроса
  * @returns Готовый запрос к api
  */
@@ -59,7 +62,8 @@ function newMutate(method: 'POST' | 'PUT') {
 }
 
 /**
- * Формирование запроса в формате formData для отправки и получения данных и определение типов
+ * Формирование запроса в формате formData для отправки и получения данных
+ * Тип <U> применяется для полученных данных
  * @param method Метод запроса
  * @returns Готовый запрос к api
  */
@@ -76,13 +80,14 @@ function newMutateFormData(method: 'POST' | 'PUT') {
 
 export const http = {
   get: newRequest('GET'),
-  list: newRequest('LIST'),
+  // Используется нестандартный метод "LIST"
+  list: newRequest(DEBUG ? 'PATCH' : 'LIST'),
+  delete: newRequest('DELETE'),
+
   post: newMutate('POST'),
   put: newMutate('PUT'),
-  delete: newRequest('DELETE'),
 
   // Если данные отправляем в формате formData
   postFormData: newMutateFormData('POST'),
-  // Если данные отправляем в формате formData
   putFormData: newMutateFormData('PUT'),
 };
