@@ -19,7 +19,10 @@ export function CustomLoadingOverlay({ isPending, children, size = 30 }: Readonl
   if (!children) return;
   return (
     <Box pos="relative">
-      <LoadingOverlay visible={isPending} loaderProps={{ children: <Loader size={size} /> }} />
+      <LoadingOverlay
+        visible={isPending}
+        loaderProps={{ children: <Loader size={size} data-testid="overlay" /> }}
+      />
       {children}
     </Box>
   );

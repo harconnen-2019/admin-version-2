@@ -7,6 +7,13 @@ import { database } from '../database/database';
 const api = `${BASE_URL}/places/item/`;
 
 const outGetId = (id: string | null) => {
+  if (id === '0')
+    return {
+      success: 0,
+      err_mess: 'Ошибка для теста',
+      err_code: '505',
+    };
+
   return {
     success: 1,
     places_item: database.place.findFirst({
@@ -50,7 +57,7 @@ const select = (placeId: string | null) => {
 const getPlace = http.get(api, ({ request }) => {
   const url = new URL(request.url);
   const placeId = url.searchParams.get('id');
-  select(placeId);
+  placeId !== '0' && select(placeId);
   return HttpResponse.json(outGetId(placeId));
 });
 

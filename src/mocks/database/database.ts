@@ -3,7 +3,7 @@ import { factory, oneOf, primaryKey } from '@mswjs/data';
 
 export const database = factory({
   place: {
-    id: primaryKey(() => faker.number.int(1000)),
+    id: primaryKey(() => faker.number.int(9999)),
     created: () => faker.date.birthdate(),
     modified: () => faker.date.birthdate(),
     name: () => faker.commerce.department(),
@@ -39,7 +39,27 @@ export const initDataBase = () => {
   const databaseType = database.type.create();
   database.type.create();
 
-  const databasePlace = database.place.create({ id: 1, type: databaseType });
+  /**
+   * Первое заполнение всегда для тестов
+   */
+  const databasePlace = database.place.create({
+    id: 1,
+    created: faker.date.birthdate(),
+    modified: faker.date.birthdate(),
+    name: 'name-test',
+    domain: 'domain-test',
+    template: 'template-test',
+    type: databaseType,
+    favicon: '/patch/favicon',
+    og_img: '/patch/og_img',
+    logo_dark: '/patch/logo_dark',
+    logo_light: '/patch/logo_light',
+    color_scheme: 'green',
+    counter_head: 'counter_head-test',
+    counter_body: 'counter_body-test',
+    thankyou_type: 'page',
+  });
+
   for (let index = 0; index < 6; index++) {
     database.place.create({ type: databaseType });
   }

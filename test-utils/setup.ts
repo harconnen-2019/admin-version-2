@@ -13,9 +13,9 @@ afterAll(() => {
   server.close();
 });
 
-server.events.on('request:start', ({ request }) => {
-  console.log('MSW intercepted:', request.method, request.url);
-});
+// server.events.on('request:start', ({ request }) => {
+//   console.log('MSW intercepted:', request.method, request.url);
+// });
 
 const { getComputedStyle } = window;
 window.getComputedStyle = (elt) => getComputedStyle(elt);
