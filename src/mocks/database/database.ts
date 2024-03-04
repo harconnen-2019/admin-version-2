@@ -20,7 +20,7 @@ export const database = factory({
     thankyou_type: () => faker.helpers.arrayElement(['pop', 'page', 'off']),
   },
   type: {
-    id: primaryKey(() => faker.number.int(1000)),
+    id: primaryKey(() => faker.number.int()),
     created: () => faker.date.birthdate(),
     modified: () => faker.date.birthdate(),
     name: () => faker.commerce.department(),
@@ -36,7 +36,7 @@ export const database = factory({
 export const initDataBase = () => {
   const databaseUser = database.user.create();
 
-  const databaseType = database.type.create();
+  const databaseType = database.type.create({ name: 'name-type-test' });
   database.type.create();
 
   /**

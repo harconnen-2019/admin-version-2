@@ -50,7 +50,7 @@ export function ErrorMessage({
       {buttonBack && (
         <>
           <Space h={50} />
-          <ButtonBack />
+          <ButtonBack step={-1} />
         </>
       )}
     </>

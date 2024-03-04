@@ -32,11 +32,20 @@ describe('Страница редактирования витрин', () => {
     const overlay = screen.queryAllByTestId('overlay');
     await waitFor(() => expect(overlay[0]).not.toBeInTheDocument());
 
-    //--
+    //-- Заголовок
     const title = screen.getByRole('heading', {
       name: /name-test/i,
     });
     expect(title).toBeInTheDocument();
+
+    // поле select
+    const group: HTMLSelectElement = screen.getByRole('combobox', {
+      name: /тип витрины/i,
+    });
+    const typePlace: HTMLOptionElement = within(group).getByRole('option', {
+      name: 'name-type-test',
+    });
+    expect(typePlace.selected).toBe(true);
 
     const arrayForm = [
       { role: 'combobox', name: 'Блок спасибо', value: 'page' },
