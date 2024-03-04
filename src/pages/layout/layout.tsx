@@ -4,7 +4,7 @@ import { AppShell, Box, Space } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 
 import { Header } from './header/header';
-// import { Navbar } from './navbar/navbar';
+import { Navbar } from './navbar/navbar';
 
 /**
  * Шаблон общий всех приватных страниц
@@ -23,7 +23,7 @@ export function Layout() {
         <Header opened={opened} toggle={toggle} />
       </AppShell.Header>
       <AppShell.Navbar p="md">
-        {/* <Navbar user={data?.session?.user?.username} place={data?.session?.place} /> */}
+        <Navbar />
       </AppShell.Navbar>
       <AppShell.Main>
         <Box maw="90%" mx="auto">

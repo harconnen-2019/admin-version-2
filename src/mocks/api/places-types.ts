@@ -5,16 +5,11 @@ import { database } from '../database/database';
 
 const api = `${BASE_URL}/places/type/`;
 
-// export const databaseType = database.type.create({ id: 1 });
-// database.type.create({ id: 2 });
-// database.type.create({ id: 3 });
-
-const out = {
-  success: 1,
-  places_type_list: database.type.getAll(),
-};
-
 const getPlacesTypesList = http.patch(api, () => {
+  const out = {
+    success: 1,
+    places_type_list: database.type.getAll(),
+  };
   return HttpResponse.json(out);
 });
 

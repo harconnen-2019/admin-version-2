@@ -15,7 +15,7 @@ interface IProperties {
  * @param root0.size размер спиннера (30)
  * @returns JSX Element
  */
-export function CustomLoadingOverlay({ isPending, children, size = 30 }: IProperties) {
+export function CustomLoadingOverlay({ isPending, children, size = 30 }: Readonly<IProperties>) {
   if (!children) return;
   return (
     <Box pos="relative">

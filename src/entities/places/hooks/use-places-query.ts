@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { PATH_PAGE } from '@/pages/path';
 import { ServiceFetch } from '@/shared/api';
 import { BASE_URL } from '@/shared/lib';
+import { notifications } from '@mantine/notifications';
 import { schemaGetPlace, schemaListPlace } from '../api/types';
 
 const _api = `${BASE_URL}/places/item/`;
@@ -29,6 +30,7 @@ export const useGetPlace = (id: string | undefined) => {
 /**
  * Хук для выбора активной витрины по ID
  * Подключается схема zod витрины, и схема валидации апи
+ * При ошибке срабатывает уведомление
  * @returns  мутацию
  */
 export const useSelectPlace = () => {
@@ -37,6 +39,13 @@ export const useSelectPlace = () => {
     mutationFn: async (id: string | number) => {
       const response = await placeApi.get(id, { select: '1' });
       return schemaGetPlace.parse(response);
+    },
+    onError: (error) => {
+      notifications.show({
+        title: 'Ошибка',
+        message: error + ' 🤥',
+        color: 'red',
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['session'] });
@@ -105,6 +114,7 @@ export const useUpdatePlace = () => {
  * Хук удаление витрины, обновление списка витрин
  * Подключается схема zod витрины, и схема валидации апи
  * Вызывает модальное окно для подтверждения
+ * После выполнения или при ошибке срабатывает уведомление
  * @returns Модальное окно с методом удаления витрины
  */
 export const useRemovePlace = () => {
@@ -114,8 +124,19 @@ export const useRemovePlace = () => {
       const response = await placeApi.remove(id);
       return schemaGetPlace.parse(response);
     },
+    onError: (error) => {
+      notifications.show({
+        title: 'Ошибка удаления',
+        message: error + ' 🤥',
+        color: 'red',
+      });
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [placeApi.keyList] });
+      notifications.show({
+        title: 'Успех',
+        message: 'Вы удалили витрину!',
+      });
     },
   });
 

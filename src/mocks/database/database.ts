@@ -3,7 +3,7 @@ import { factory, oneOf, primaryKey } from '@mswjs/data';
 
 export const database = factory({
   place: {
-    id: primaryKey(Number),
+    id: primaryKey(() => faker.number.int(1000)),
     created: () => faker.date.birthdate(),
     modified: () => faker.date.birthdate(),
     name: () => faker.commerce.department(),
@@ -20,7 +20,7 @@ export const database = factory({
     thankyou_type: () => faker.helpers.arrayElement(['pop', 'page', 'off']),
   },
   type: {
-    id: primaryKey(Number),
+    id: primaryKey(() => faker.number.int(1000)),
     created: () => faker.date.birthdate(),
     modified: () => faker.date.birthdate(),
     name: () => faker.commerce.department(),
@@ -30,23 +30,23 @@ export const database = factory({
     place: oneOf('place'),
     user: oneOf('user'),
   },
-  user: { id: primaryKey(Number), username: () => faker.person.firstName() },
+  user: { id: primaryKey(() => faker.number.int(1000)), username: () => faker.person.firstName() },
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const initDataBase = () => {
-  const user = database.user.create({ id: 1 });
-  const databaseType = database.type.create({ id: 1 });
-  database.type.create({ id: 2 });
-  const databasePlace = database.place.create({ id: 1, type: databaseType });
+  const databaseUser = database.user.create();
 
-  for (let index = 2; index < 6; index++) {
-    database.place.create({ id: index, type: databaseType });
+  const databaseType = database.type.create();
+  database.type.create();
+
+  const databasePlace = database.place.create({ id: 1, type: databaseType });
+  for (let index = 0; index < 6; index++) {
+    database.place.create({ type: databaseType });
   }
 
   database.session.create({
     id: 'session-id',
     place: databasePlace,
-    user: user,
+    user: databaseUser,
   });
 };
