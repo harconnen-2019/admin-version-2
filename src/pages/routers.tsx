@@ -1,13 +1,17 @@
+import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { AuthProvider, RequireAuth } from '@/entities/auth';
+import { Loadable } from '@/shared/ui';
 
-import { LoginPage } from './auth-pages';
-import { DashboardPage } from './dashboard-page';
 import { NotFoundPage, ServerErrorPage } from './errors-pages';
 import { Layout } from './layout';
 import { PATH_PAGE } from './path';
 import { routerPlaces } from './places-pages/places';
+
+const LoginPage = Loadable(lazy(() => import('./auth-pages')));
+const ApiPage = Loadable(lazy(() => import('./api-pages/api-page')));
+const DashboardPage = Loadable(lazy(() => import('./dashboard-page')));
 
 const privateRouter = (
   <>
@@ -36,6 +40,7 @@ export function Routers() {
           }
         >
           <Route index element={<DashboardPage />} />
+          <Route path={PATH_PAGE.api} element={<ApiPage />} />
           <Route path={PATH_PAGE.page500} element={<ServerErrorPage />} />
           {privateRouter}
         </Route>

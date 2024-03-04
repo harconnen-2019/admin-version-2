@@ -21,7 +21,7 @@ import classes from './login.module.css';
  * Страница авторизации
  * @returns JSX Element
  */
-export function LoginPage() {
+export default function LoginPage() {
   const login = useLogin();
 
   const form = useForm({

@@ -1,4 +1,4 @@
-import { Code, Divider, Group } from '@mantine/core';
+import { Box, Code, Divider, Group, Text, Tooltip } from '@mantine/core';
 import { useDocumentTitle } from '@mantine/hooks';
 import { IconHome, IconLogout, IconPin, IconUser } from '@tabler/icons-react';
 import { NavLink } from 'react-router-dom';
@@ -17,6 +17,13 @@ export function Navbar() {
   useDocumentTitle(title);
   const { place, user } = useAuth();
 
+  /**
+   * ССылки для боковой навигации
+   * @param to url
+   * @param name название
+   * @param ico иконка
+   * @returns JSX Element
+   */
   const linkItem = (to: string, name: string, ico: JSX.Element) => {
     return (
       <NavLink
@@ -27,6 +34,27 @@ export function Navbar() {
       >
         {ico} {name}
       </NavLink>
+    );
+  };
+
+  /**
+   * Заголовок для группы ссылок с подсказкой
+   * @param name название
+   * @param label подсказка
+   * @returns JSX Element
+   */
+  const titleNavBar = (name: string | undefined, label: string) => {
+    return (
+      <Tooltip label={label} color="grape" arrowOffset={20} withArrow position="top-start">
+        <Text
+          c="var(--mantine-color-grape-light-color)"
+          mb="sm"
+          mt="sm"
+          style={{ cursor: 'default' }}
+        >
+          {name ?? ''}
+        </Text>
+      </Tooltip>
     );
   };
 
@@ -44,9 +72,10 @@ export function Navbar() {
         {place &&
           linkItem(
             PATH_PAGE.place.root,
-            place.name,
+            'Витрины',
             <IconPin className={classes.linkIcon} stroke={1.5} />,
           )}
+        <Box ml={30}>{titleNavBar(place?.name, 'Активная витрина')}</Box>
 
         <Divider my="sm" label="Справочник" labelPosition="left" />
       </div>
