@@ -10,4 +10,11 @@ export const PATH_PAGE = {
     create: '/places/create',
     edit: (placeId: string | number) => `/places/${placeId}/edit`,
   },
+  thesaurus: {
+    language: {
+      root: '/thesaurus/language',
+      create: '/thesaurus/language/create',
+      edit: (id: string | number) => `/thesaurus/language/${id}/edit`,
+    },
+  },
 };

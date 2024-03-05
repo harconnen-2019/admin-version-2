@@ -33,10 +33,10 @@ export const placeInitialPost = (): IRequestPostPlace => {
   return initial;
 };
 
-// редактирование
-export const placeInitialPut = (id: string | undefined): IRequestPutPlace => {
+// редактирование, id проверяется на странице
+export const placeInitialPut = (id: string | number): IRequestPutPlace => {
   const result = { ...(initial as IRequestPutPlace) };
-  result.id = Number(id) ?? '';
+  result.id = Number(id);
 
   return result;
 };

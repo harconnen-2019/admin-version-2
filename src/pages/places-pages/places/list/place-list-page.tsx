@@ -14,6 +14,7 @@ export default function PlaceListPage() {
   const removePlace = useRemovePlace();
 
   const listPlaces = data?.places_item_list ?? [];
+  listPlaces.sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <>

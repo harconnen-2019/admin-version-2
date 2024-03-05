@@ -16,6 +16,7 @@ interface IProperties {
 export function SelectPlaceTypes({ getInputProps }: Readonly<IProperties>) {
   const { data, status, error } = usePlaceTypeList();
   const listPlaceTypes = data?.places_type_list ?? [];
+  listPlaceTypes.sort((a, b) => a.name.localeCompare(b.name));
 
   if (error)
     return (
