@@ -1,6 +1,6 @@
 import { Box, Code, Divider, Group, Text, Tooltip } from '@mantine/core';
 import { useDocumentTitle } from '@mantine/hooks';
-import { IconHome, IconLogout, IconPin, IconUser } from '@tabler/icons-react';
+import { IconHome, IconLanguage, IconLogout, IconPin, IconUser } from '@tabler/icons-react';
 import { NavLink } from 'react-router-dom';
 
 import { useAuth } from '@/entities/auth';
@@ -78,6 +78,12 @@ export function Navbar() {
         <Box ml={30}>{titleNavBar(place?.name, 'Активная витрина')}</Box>
 
         <Divider my="sm" label="Справочник" labelPosition="left" />
+
+        {linkItem(
+          PATH_PAGE.thesaurus.language.root,
+          'Языки',
+          <IconLanguage className={classes.linkIcon} stroke={1.5} />,
+        )}
       </div>
 
       <div className={classes.footer}>

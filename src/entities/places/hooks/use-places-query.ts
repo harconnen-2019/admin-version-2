@@ -15,13 +15,13 @@ const placeApi = new ServiceFetch(_api, 'place');
  * Хук для витрины по ID
  * Подключается схема zod витрины, и схема валидации апи
  * @param id ID витрины
- * @returns  place, status, error
+ * @returns  useQuery
  */
-export const useGetPlace = (id: string | undefined) => {
+export const useGetPlace = (id: string | number) => {
   return useQuery({
     queryKey: [placeApi.keyId, id],
     queryFn: async () => {
-      const response = await placeApi.get(id!);
+      const response = await placeApi.get(id);
       return schemaGetPlace.parse(response);
     },
   });
@@ -31,7 +31,7 @@ export const useGetPlace = (id: string | undefined) => {
  * Хук для выбора активной витрины по ID
  * Подключается схема zod витрины, и схема валидации апи
  * При ошибке срабатывает уведомление
- * @returns  мутацию
+ * @returns  useMutation
  */
 export const useSelectPlace = () => {
   const queryClient = useQueryClient();
@@ -56,7 +56,7 @@ export const useSelectPlace = () => {
 /**
  * Хук для вызова списка витрин
  * Подключается схема zod списка витрин, и схема валидации апи
- * @returns  listPlaces, status, error
+ * @returns  useQuery
  */
 export const usePlaceList = () => {
   return useQuery({
@@ -72,7 +72,7 @@ export const usePlaceList = () => {
  * Хук создания новой витрины, обновление списка витрин
  * Подключается схема zod витрины, и схема валидации апи
  * После добавления переходит к списку
- * @returns Метод мутации
+ * @returns useMutation
  */
 export const useCreatePlace = () => {
   const navigate = useNavigate();
@@ -93,7 +93,7 @@ export const useCreatePlace = () => {
  * Хук отправки изменения витрины, обновление списка витрин
  * Подключается схема zod витрины, и схема валидации апи
  * После добавления переходит к списку
- * @returns Метод мутации
+ * @returns useMutation
  */
 export const useUpdatePlace = () => {
   const navigate = useNavigate();

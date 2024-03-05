@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useForm } from '@mantine/form';
 
 import {
-  FormPlaceAdd,
+  FormPlace,
   placeFormValidate,
   placeInitialPut,
   placeLoadFromApi,
@@ -17,13 +17,14 @@ import { CustomLoadingOverlay, ErrorMessage, GroupButtonForm, TitlePage } from '
 
 /**
  * Страница редактирования витрины
+ * //TODO проверка placeId - TS ругается возможен undefined
  * @returns страница
  */
 export default function PlaceEditPage() {
   const { placeId } = useParams();
   const updatePlace = useUpdatePlace();
 
-  const { data, error, status } = useGetPlace(placeId);
+  const { data, error, status } = useGetPlace(placeId!);
   const place = data?.places_item ?? undefined;
 
   // Картинки в форме, которые имеют типизацию string или File
@@ -34,7 +35,7 @@ export default function PlaceEditPage() {
    * Указание полей для валидации
    */
   const form = useForm<placeType.IRequestPutPlace>({
-    initialValues: placeInitialPut(placeId),
+    initialValues: placeInitialPut(placeId!),
     validate: placeFormValidate,
   });
 
@@ -66,7 +67,7 @@ export default function PlaceEditPage() {
               return updatePlace.mutate(objectToFormDate(valuesNoImages));
             })}
           >
-            <FormPlaceAdd form={form} />
+            <FormPlace form={form} />
             {
               // Ошибка отправки формы
               updatePlace.isError && (
