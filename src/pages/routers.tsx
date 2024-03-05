@@ -8,6 +8,7 @@ import { NotFoundPage, ServerErrorPage } from './errors-pages';
 import { Layout } from './layout';
 import { PATH_PAGE } from './path';
 import { routerPlaces } from './places-pages/places';
+import { routerLanguages } from './thesaurus/languages';
 
 const LoginPage = Loadable(lazy(() => import('./auth-pages')));
 const ApiPage = Loadable(lazy(() => import('./api-pages/api-page')));
@@ -16,7 +17,7 @@ const DashboardPage = Loadable(lazy(() => import('./dashboard-page')));
 const privateRouter = (
   <>
     {routerPlaces}
-    {/* {routerPlaceLanguage} */}
+    {routerLanguages}
     {/* {routerStaticPage} */}
     {/* {routerPageLanguage} */}
   </>

@@ -12,9 +12,9 @@ export const PATH_PAGE = {
   },
   thesaurus: {
     language: {
-      root: '/thesaurus/language',
-      create: '/thesaurus/language/create',
-      edit: (id: string | number) => `/thesaurus/language/${id}/edit`,
+      root: '/thesaurus/languages',
+      create: '/thesaurus/languages/create',
+      edit: (id: string | number) => `/thesaurus/languages/${id}/edit`,
     },
   },
 };

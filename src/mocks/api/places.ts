@@ -51,6 +51,7 @@ const select = (placeId: string | null) => {
     user: database.user.create(),
   });
 };
+
 /**
  * Method: GET
  */

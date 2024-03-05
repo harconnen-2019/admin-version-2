@@ -46,7 +46,7 @@ export const initDataBase = () => {
   const databaseType = database.type.create({ name: 'name-type-test' });
   database.type.create();
 
-  database.language.create({ name: 'Русский', slug: 'ru' });
+  database.language.create({ id: 1, name: 'Русский', slug: 'ru' });
   database.language.create({ name: 'English', slug: 'en' });
   database.language.create();
   database.language.create();
