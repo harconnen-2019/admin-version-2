@@ -21,7 +21,7 @@ export function ButtonAdd({ children, link }: Readonly<IProperties>) {
   return (
     <>
       <Link to={link}>
-        <Button variant="light" color="green" leftSection={<IconCirclePlus size={18} />}>
+        <Button color="green" leftSection={<IconCirclePlus size={18} />}>
           {children}
         </Button>
       </Link>

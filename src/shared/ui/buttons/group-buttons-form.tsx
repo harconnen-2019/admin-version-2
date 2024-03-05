@@ -17,7 +17,7 @@ export function GroupButtonForm({
     <>
       <Space h={50} />
       <Group>
-        <Button type="submit" variant="light" disabled={disabled}>
+        <Button type="submit" disabled={disabled}>
           {children}
         </Button>
         <ButtonBack />

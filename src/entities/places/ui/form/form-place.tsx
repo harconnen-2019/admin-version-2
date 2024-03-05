@@ -44,7 +44,7 @@ interface IProperties {
  * @param root0.form состояние формы
  * @returns JSX Element
  */
-export function FormPlaceAdd({ form }: Readonly<IProperties>) {
+export function FormPlace({ form }: Readonly<IProperties>) {
   const [segment, setSegment] = useState('1');
 
   /**

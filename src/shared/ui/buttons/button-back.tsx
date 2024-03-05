@@ -15,7 +15,7 @@ export function ButtonBack({
 }: Readonly<{ children?: ReactNode; step?: number }>) {
   const navigate = useNavigate();
   return (
-    <Button type="button" variant="default" onClick={() => navigate(step)}>
+    <Button type="button" variant="outline" onClick={() => navigate(step)}>
       {children}
     </Button>
   );
