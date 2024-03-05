@@ -31,7 +31,6 @@ export function TablePlace({ data, error, status, placeId, remove }: Readonly<IP
    */
   const rows = data.map((element) => (
     <Table.Tr key={element.id}>
-      <Table.Td>{element.id}</Table.Td>
       <Table.Td>
         {placeId === element.id && (
           <Badge fullWidth variant="light" color="grape">
@@ -58,7 +57,6 @@ export function TablePlace({ data, error, status, placeId, remove }: Readonly<IP
       isLoading={status === 'pending'}
       error={error}
       tableHead={[
-        { id: 1, name: 'ID', w: 50 },
         { id: 2, name: 'Состояние', w: 200 },
         { id: 3, name: 'Витрина', w: 'auto' },
         { id: 4, name: 'Создана', w: 170 },
