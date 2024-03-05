@@ -1,11 +1,12 @@
 import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { PATH_PAGE } from '@/pages/path';
+import { PATH } from '@/pages/path';
 import { ServiceFetch } from '@/shared/api';
 import { BASE_URL } from '@/shared/lib';
-import { notifications } from '@mantine/notifications';
+
 import { schemaGetPlace, schemaListPlace } from '../api/types';
 
 const _api = `${BASE_URL}/places/item/`;
@@ -84,7 +85,7 @@ export const useCreatePlace = () => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: [placeApi.keyList] });
-      if (data.success === 1) navigate(PATH_PAGE.place.root);
+      if (data.success === 1) navigate(PATH.places.root);
     },
   });
 };
@@ -105,7 +106,7 @@ export const useUpdatePlace = () => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: [placeApi.keyList] });
-      if (data.success === 1) navigate(PATH_PAGE.place.root);
+      if (data.success === 1) navigate(PATH.places.root);
     },
   });
 };

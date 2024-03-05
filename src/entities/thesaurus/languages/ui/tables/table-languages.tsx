@@ -1,8 +1,9 @@
 import { Badge, Table } from '@mantine/core';
 
-import { PATH_PAGE } from '@/pages/path';
+import { PATH } from '@/pages/path';
 import { getDate } from '@/shared/lib';
 import { ButtonDell, LinkAnchor, TableData } from '@/shared/ui';
+
 import { ILanguage } from '../../api/types';
 
 interface IProperties {
@@ -31,7 +32,7 @@ export function TableLanguages({ data, error, status, remove }: Readonly<IProper
         <Badge variant="default">{element.slug}</Badge>
       </Table.Td>
       <Table.Td>
-        <LinkAnchor to={PATH_PAGE.thesaurus.language.edit(element.id)}>{element.name}</LinkAnchor>
+        <LinkAnchor to={PATH.thesaurus.languages.edit(element.id)}>{element.name}</LinkAnchor>
       </Table.Td>
       <Table.Td>{getDate(element.created)}</Table.Td>
       <Table.Td>{getDate(element.modified)}</Table.Td>

@@ -1,5 +1,6 @@
-import { schemaDate, schemaValidate } from '@/shared/api';
 import { z } from 'zod';
+
+import { schemaDate, schemaValidate } from '@/shared/api';
 
 /**
  * Схема элемента Языка

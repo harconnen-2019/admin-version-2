@@ -2,7 +2,8 @@ import { Box, NativeSelect } from '@mantine/core';
 import { GetInputPropsReturnType } from 'node_modules/@mantine/form/lib/types';
 
 import { CustomLoadingOverlay } from '@/shared/ui';
-import { usePlaceTypeList } from '../../hooks/use-place-types-query';
+
+import { useTypeFromPlacesList } from '../../hooks/use-types-from-places-query';
 
 interface IProperties {
   getInputProps: GetInputPropsReturnType;
@@ -16,10 +17,10 @@ interface IProperties {
  * @param root0.getInputProps поле состояния формы
  * @returns поле select
  */
-export function SelectPlaceTypes({ getInputProps }: Readonly<IProperties>) {
-  const { data, status, error } = usePlaceTypeList();
-  const listPlaceTypes = data?.places_type_list ?? [];
-  listPlaceTypes.sort((a, b) => a.name.localeCompare(b.name));
+export function SelectTypeFromPlaces({ getInputProps }: Readonly<IProperties>) {
+  const { data, status, error } = useTypeFromPlacesList();
+  const listTypeFromPlaces = data?.places_type_list ?? [];
+  listTypeFromPlaces.sort((a, b) => a.name.localeCompare(b.name));
 
   if (error)
     return (
@@ -35,7 +36,7 @@ export function SelectPlaceTypes({ getInputProps }: Readonly<IProperties>) {
         <option disabled value="0">
           Выбрать...
         </option>
-        {listPlaceTypes.map((item) => (
+        {listTypeFromPlaces.map((item) => (
           <option key={item.id} value={item.id}>
             {item.name}
           </option>

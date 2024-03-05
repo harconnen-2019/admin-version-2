@@ -98,11 +98,13 @@ describe('Таблица со списком витрин', () => {
     renderComponent();
     // Выбираем вторую строку
     const row2 = screen.getByRole('row', {
-      name: /2 активная/i,
+      name: /baby/i,
     });
-    const active = within(row2).getByText(/активная/i);
+    const active = within(row2).getByRole('checkbox', {
+      name: /select row/i,
+    });
 
-    expect(active).toBeInTheDocument();
+    expect(active).toHaveAttribute('checked', '');
   });
 
   it('Если не приходит Id витрины из сессии статус "активная" отключен', () => {
@@ -128,26 +130,13 @@ describe('Таблица со списком витрин', () => {
     renderComponent();
     // Выбираем первую строку
     const row1 = screen.getByRole('row', {
-      name: /1 clothing/i,
+      name: /clothing/i,
     });
-    const buttonEnabled = within(row1).getByRole('button', {
-      name: /выбрать/i,
+    const buttonEnabled = within(row1).getByRole('checkbox', {
+      name: /select row/i,
     });
 
     expect(buttonEnabled).not.toHaveAttribute('disabled');
-  });
-
-  it('Кнопка выбора витрины выключена', () => {
-    renderComponent();
-    // Выбираем вторую строку
-    const row2 = screen.getByRole('row', {
-      name: /2 активная/i,
-    });
-    const buttonDisabled = within(row2).getByRole('button', {
-      name: /выбрать/i,
-    });
-
-    expect(buttonDisabled).toHaveAttribute('disabled');
   });
 
   it('Дата переводится в удобный формат', () => {

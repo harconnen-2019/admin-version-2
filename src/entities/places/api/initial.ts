@@ -1,4 +1,5 @@
 import { defaultValidate } from '@/shared/lib';
+
 import { IPlace, IRequestPostPlace, IRequestPutPlace } from './types';
 
 /**

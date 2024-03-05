@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/no-null */
-/* eslint-disable sonarjs/no-duplicate-string */
 import { HttpResponse, http } from 'msw';
 import { BASE_URL } from '../../shared/lib';
 import { database } from '../database/database';
@@ -68,6 +66,8 @@ const getPlace = http.get(api, ({ request }) => {
 const listPlaces = http.patch(api, () => {
   const outList = {
     success: 1,
+    // err_mess: 'что-то не так',
+    // err_code: 900,
     places_item_list: database.place.getAll(),
   };
   return HttpResponse.json(outList);

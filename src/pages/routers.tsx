@@ -6,22 +6,19 @@ import { Loadable } from '@/shared/ui';
 
 import { NotFoundPage, ServerErrorPage } from './errors-pages';
 import { Layout } from './layout';
-import { PATH_PAGE } from './path';
-import { routerPlaces } from './places-pages/places';
-import { routerLanguages } from './thesaurus/languages';
+import { PATH } from './path';
 
-const LoginPage = Loadable(lazy(() => import('./auth-pages')));
-const ApiPage = Loadable(lazy(() => import('./api-pages/api-page')));
-const DashboardPage = Loadable(lazy(() => import('./dashboard-page')));
+const Login = Loadable(lazy(() => import('./auth-pages')));
+const Api = Loadable(lazy(() => import('./api-pages/api-page')));
+const Dashboard = Loadable(lazy(() => import('./dashboard-page')));
 
-const privateRouter = (
-  <>
-    {routerPlaces}
-    {routerLanguages}
-    {/* {routerStaticPage} */}
-    {/* {routerPageLanguage} */}
-  </>
-);
+const PlaceList = Loadable(lazy(() => import('./places-pages/places/list')));
+const PlaceCreate = Loadable(lazy(() => import('./places-pages/places/create')));
+const PlaceEdit = Loadable(lazy(() => import('./places-pages/places/edit')));
+
+const LangList = Loadable(lazy(() => import('./thesaurus/languages/list')));
+const LangCreate = Loadable(lazy(() => import('./thesaurus/languages/create')));
+const LangEdit = Loadable(lazy(() => import('./thesaurus/languages/edit')));
 
 /**
  * Формирование маршрутизатора всего приложения
@@ -33,20 +30,27 @@ export function Routers() {
     <AuthProvider>
       <Routes>
         <Route
-          path={PATH_PAGE.root}
+          path={PATH.root}
           element={
             <RequireAuth>
               <Layout />
             </RequireAuth>
           }
         >
-          <Route index element={<DashboardPage />} />
-          <Route path={PATH_PAGE.api} element={<ApiPage />} />
-          <Route path={PATH_PAGE.page500} element={<ServerErrorPage />} />
-          {privateRouter}
+          <Route index element={<Dashboard />} />
+          <Route path={PATH.api} element={<Api />} />
+          <Route path={PATH.page500} element={<ServerErrorPage />} />
+
+          <Route path={PATH.places.root} element={<PlaceList />} />
+          <Route path={PATH.places.create} element={<PlaceCreate />} />
+          <Route path={`${PATH.places.root}/:placeId/edit`} element={<PlaceEdit />} />
+
+          <Route path={PATH.thesaurus.languages.root} element={<LangList />} />
+          <Route path={PATH.thesaurus.languages.create} element={<LangCreate />} />
+          <Route path={`${PATH.thesaurus.languages.root}/:langId/edit`} element={<LangEdit />} />
         </Route>
-        <Route path={PATH_PAGE.login} element={<LoginPage />} />
-        <Route path={PATH_PAGE.page404} element={<NotFoundPage />} />
+        <Route path={PATH.login} element={<Login />} />
+        <Route path={PATH.page404} element={<NotFoundPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </AuthProvider>

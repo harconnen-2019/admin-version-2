@@ -1,11 +1,11 @@
-import { Badge, Table } from '@mantine/core';
+import { Checkbox, Table } from '@mantine/core';
 
-import { PATH_PAGE } from '@/pages/path';
+import { PATH } from '@/pages/path';
 import { getDate } from '@/shared/lib';
-
 import { ButtonDell, LinkAnchor, TableData } from '@/shared/ui';
+
 import { IPlace } from '../../api/types';
-import { SelectPlaceButton } from '../select/select-place-button';
+import { useSelectPlace } from '../../hooks/use-places-query';
 
 interface IProperties {
   status: string;
@@ -26,28 +26,37 @@ interface IProperties {
  * @returns JSX Element
  */
 export function TablePlace({ data, error, status, placeId, remove }: Readonly<IProperties>) {
+  const { mutate } = useSelectPlace();
+
   /**
    * Формируем строки таблицы
    */
   const rows = data.map((element) => (
     <Table.Tr key={element.id}>
       <Table.Td>
-        {placeId === element.id && (
-          <Badge fullWidth variant="light" color="grape">
-            Активная
-          </Badge>
-        )}
+        <Checkbox
+          ml={'sm'}
+          color="grape"
+          size="md"
+          aria-label="Select row"
+          checked={placeId === element.id}
+          onChange={(event) => {
+            event.currentTarget.checked && mutate(element.id);
+          }}
+        />
       </Table.Td>
       <Table.Td>
-        <LinkAnchor to={PATH_PAGE.place.edit(element.id)}>{element.name}</LinkAnchor>
+        <LinkAnchor select={placeId === element.id} to={PATH.places.edit(element.id)}>
+          {element.name}
+        </LinkAnchor>
       </Table.Td>
       <Table.Td>{getDate(element.created)}</Table.Td>
       <Table.Td>{getDate(element.modified)}</Table.Td>
       <Table.Td align="right">
-        <SelectPlaceButton placeId={element.id} disabled={placeId === element.id} />
-      </Table.Td>
-      <Table.Td align="right">
-        <ButtonDell callback={() => remove(element.id, element.name)} />
+        <ButtonDell
+          callback={() => remove(element.id, element.name)}
+          disabled={placeId === element.id}
+        />
       </Table.Td>
     </Table.Tr>
   ));
@@ -57,12 +66,11 @@ export function TablePlace({ data, error, status, placeId, remove }: Readonly<IP
       isLoading={status === 'pending'}
       error={error}
       tableHead={[
-        { id: 2, name: 'Состояние', w: 200 },
-        { id: 3, name: 'Витрина', w: 'auto' },
-        { id: 4, name: 'Создана', w: 170 },
-        { id: 5, name: 'Изменена', w: 170 },
-        { id: 6, name: ' ', w: 100 },
-        { id: 7, name: ' ', w: 50 },
+        { id: 1, name: 'Выбор', w: 100 },
+        { id: 2, name: 'Витрина', w: 'auto' },
+        { id: 3, name: 'Создана', w: 170 },
+        { id: 4, name: 'Изменена', w: 170 },
+        { id: 5, name: ' ', w: 50 },
       ]}
       empty={(status === 'success') === (data.length === 0)}
     >

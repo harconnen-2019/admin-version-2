@@ -1,8 +1,7 @@
-import { ReactNode } from 'react';
-import { Link } from 'react-router-dom';
-
 import { Button, Space } from '@mantine/core';
 import { IconCirclePlus } from '@tabler/icons-react';
+import { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 
 interface IProperties {
   children: ReactNode;

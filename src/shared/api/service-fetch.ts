@@ -1,4 +1,4 @@
-import { http } from '.';
+import { http } from './http';
 import { IRequestParameters } from './schemes-merge';
 
 /**
@@ -21,15 +21,15 @@ export class ServiceFetch {
     return this._api;
   }
   get keyId() {
-    return `${this._key}-`;
+    return this._key;
   }
   get keyList() {
-    return `${this._key}list`;
+    return `${this._key}-list`;
   }
 
   /**
    * Запрос на получение данных по ID
-   * @param id идентификатор витрины
+   * @param id идентификатор
    * @param parameters объект со списком дополнительных параметров
    * @returns Валидный ответ или ошибка
    */
@@ -75,7 +75,7 @@ export class ServiceFetch {
   }
 
   /**
-   * Запрос на удаление витрины
+   * Запрос на удаление
    * @param id ID удаляемого элемента
    * @returns Валидный ответ или ошибка
    */

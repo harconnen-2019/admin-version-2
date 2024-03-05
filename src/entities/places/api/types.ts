@@ -1,6 +1,7 @@
-import { schemaPlacesType } from '@/entities/places-types/api/types';
-import { schemaDate, schemaValidate } from '@/shared/api';
 import { z } from 'zod';
+
+import { typeFromPlacesType } from '@/entities/types-from-places';
+import { schemaDate, schemaValidate } from '@/shared/api';
 
 /**
  * Схема элемента витрины
@@ -13,7 +14,7 @@ export const schemaPlace = z
     name: z.string(),
     domain: z.string(),
     template: z.string(),
-    type: schemaPlacesType,
+    type: typeFromPlacesType.schemaTypeFromPlaces,
     favicon: z.string().nullable(),
     og_img: z.string().nullable(),
     logo_light: z.string().nullable(),
