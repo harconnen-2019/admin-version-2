@@ -2,40 +2,40 @@ import { Box, NativeSelect } from '@mantine/core';
 import { GetInputPropsReturnType } from 'node_modules/@mantine/form/lib/types';
 
 import { CustomLoadingOverlay } from '@/shared/ui';
-import { usePlaceTypeList } from '../../hooks/use-place-types-query';
+import { useLanguageList } from '../../hooks/use-languages-query';
 
 interface IProperties {
   getInputProps: GetInputPropsReturnType;
 }
 
 /**
- * Список типов витрин с выбором
+ * Список языков с выбором
  * Пока идет загрузка показывается CustomLoadingOverlay
  * Первое пустое поле обязательно, особенность библиотеки, без ручного выбора нет значения
  * @param root0 пропсы
  * @param root0.getInputProps поле состояния формы
  * @returns поле select
  */
-export function SelectPlaceTypes({ getInputProps }: Readonly<IProperties>) {
-  const { data, status, error } = usePlaceTypeList();
-  const listPlaceTypes = data?.places_type_list ?? [];
-  listPlaceTypes.sort((a, b) => a.name.localeCompare(b.name));
+export function SelectLanguages({ getInputProps }: Readonly<IProperties>) {
+  const { data, status, error } = useLanguageList();
+  const listLanguages = data?.thesaurus_language_list ?? [];
+  listLanguages.sort((a, b) => a.name.localeCompare(b.name));
 
   if (error)
     return (
       <Box c="red">
-        Тип витрины
+        Язык
         <br /> {error.message}
       </Box>
     );
 
   return (
     <CustomLoadingOverlay isPending={status === 'pending'} size={20}>
-      <NativeSelect withAsterisk label="Тип витрины" {...getInputProps} mt="md" w={300}>
+      <NativeSelect withAsterisk label="Язык" {...getInputProps} mt="md" w={300}>
         <option disabled value="0">
           Выбрать...
         </option>
-        {listPlaceTypes.map((item) => (
+        {listLanguages.map((item) => (
           <option key={item.id} value={item.id}>
             {item.name}
           </option>

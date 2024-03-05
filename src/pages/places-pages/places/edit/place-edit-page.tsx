@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useForm } from '@mantine/form';
 
 import {
-  FormPlaceAdd,
+  FormPlace,
   placeFormValidate,
   placeInitialPut,
   placeLoadFromApi,
@@ -67,7 +67,7 @@ export default function PlaceEditPage() {
               return updatePlace.mutate(objectToFormDate(valuesNoImages));
             })}
           >
-            <FormPlaceAdd form={form} />
+            <FormPlace form={form} />
             {
               // Ошибка отправки формы
               updatePlace.isError && (

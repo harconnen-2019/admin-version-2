@@ -25,6 +25,13 @@ export const database = factory({
     modified: () => faker.date.birthdate(),
     name: () => faker.commerce.department(),
   },
+  language: {
+    id: primaryKey(() => faker.number.int()),
+    created: () => faker.date.birthdate(),
+    modified: () => faker.date.birthdate(),
+    name: () => faker.location.country(),
+    slug: () => faker.location.countryCode(),
+  },
   session: {
     id: primaryKey(String),
     place: oneOf('place'),
@@ -38,6 +45,11 @@ export const initDataBase = () => {
 
   const databaseType = database.type.create({ name: 'name-type-test' });
   database.type.create();
+
+  database.language.create({ name: 'Русский', slug: 'ru' });
+  database.language.create({ name: 'English', slug: 'en' });
+  database.language.create();
+  database.language.create();
 
   /**
    * Первое заполнение всегда для тестов

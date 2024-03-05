@@ -1,7 +1,7 @@
 import { useForm } from '@mantine/form';
 
 import {
-  FormPlaceAdd,
+  FormPlace,
   placeFormValidate,
   placeInitialPost,
   placeType,
@@ -30,7 +30,7 @@ export default function PlaceCreatePage() {
     <>
       <TitlePage>Новая витрина</TitlePage>
       <form onSubmit={form.onSubmit((values) => createPlace.mutate(objectToFormDate(values)))}>
-        <FormPlaceAdd form={form} />
+        <FormPlace form={form} />
         {
           // Ошибка отправки формы
           createPlace.isError && (
