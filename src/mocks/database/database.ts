@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { factory, oneOf, primaryKey } from '@mswjs/data';
+import { drop, factory, oneOf, primaryKey } from '@mswjs/data';
 
 export const database = factory({
   place: {
@@ -37,19 +37,19 @@ export const database = factory({
     place: oneOf('place'),
     user: oneOf('user'),
   },
-  user: { id: primaryKey(() => faker.number.int(1000)), username: () => faker.person.firstName() },
+  user: { id: primaryKey(() => faker.number.int()), username: () => faker.person.firstName() },
 });
 
 export const initDataBase = () => {
-  const databaseUser = database.user.create();
+  drop(database);
 
-  const databaseType = database.type.create({ name: 'name-type-test' });
-  database.type.create();
+  const databaseUser = database.user.create({ id: 1 });
+
+  const databaseType = database.type.create({ id: 1, name: 'name-type-test' });
+  database.type.create({ id: 2 });
 
   database.language.create({ id: 1, name: 'Русский', slug: 'ru' });
-  database.language.create({ name: 'English', slug: 'en' });
-  database.language.create();
-  database.language.create();
+  database.language.create({ id: 2, name: 'English', slug: 'en' });
 
   /**
    * Первое заполнение всегда для тестов
@@ -72,8 +72,8 @@ export const initDataBase = () => {
     thankyou_type: 'page',
   });
 
-  for (let index = 0; index < 6; index++) {
-    database.place.create({ type: databaseType });
+  for (let index = 2; index < 5; index++) {
+    database.place.create({ id: index, type: databaseType });
   }
 
   database.session.create({

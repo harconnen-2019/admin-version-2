@@ -1,20 +1,20 @@
-export const PATH_PAGE = {
+export const PATH = {
   root: '/',
   login: '/login',
   logout: '/api/red/users/logout',
   api: '/api',
   page404: '/404',
   page500: '/500',
-  place: {
+  places: {
     root: '/places',
     create: '/places/create',
     edit: (placeId: string | number) => `/places/${placeId}/edit`,
   },
   thesaurus: {
-    language: {
+    languages: {
       root: '/thesaurus/languages',
       create: '/thesaurus/languages/create',
-      edit: (id: string | number) => `/thesaurus/languages/${id}/edit`,
+      edit: (langId: string | number) => `/thesaurus/languages/${langId}/edit`,
     },
   },
 };

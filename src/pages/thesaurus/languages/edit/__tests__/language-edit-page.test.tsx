@@ -15,7 +15,7 @@ const queryClient = new QueryClient();
  */
 
 describe('Страница редактирования языка', () => {
-  vi.mocked(useParams).mockReturnValue({ languageId: '1' });
+  vi.mocked(useParams).mockReturnValue({ langId: '1' });
   const renderComponent = () =>
     render(
       <QueryClientProvider client={queryClient}>

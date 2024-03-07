@@ -1,11 +1,12 @@
 import { modals } from '@mantine/modals';
+import { notifications } from '@mantine/notifications';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { PATH_PAGE } from '@/pages/path';
+import { PATH } from '@/pages/path';
 import { ServiceFetch } from '@/shared/api';
 import { BASE_URL } from '@/shared/lib';
-import { notifications } from '@mantine/notifications';
+
 import {
   IRequestPostLanguage,
   IRequestPutLanguage,
@@ -63,7 +64,7 @@ export const useCreateLanguage = () => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: [languageApi.keyList] });
-      if (data.success === 1) navigate(PATH_PAGE.thesaurus.language.root);
+      if (data.success === 1) navigate(PATH.thesaurus.languages.root);
     },
   });
 };
@@ -84,7 +85,7 @@ export const useUpdateLanguage = () => {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: [languageApi.keyList] });
-      if (data.success === 1) navigate(PATH_PAGE.thesaurus.language.root);
+      if (data.success === 1) navigate(PATH.thesaurus.languages.root);
     },
   });
 };

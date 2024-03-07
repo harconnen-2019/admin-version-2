@@ -30,9 +30,9 @@ const outGetId = (id: string | null) => {
  */
 const getLanguage = http.get(api, ({ request }) => {
   const url = new URL(request.url);
-  const languageId = url.searchParams.get('id');
+  const langId = url.searchParams.get('id');
 
-  return HttpResponse.json(outGetId(languageId));
+  return HttpResponse.json(outGetId(langId));
 });
 
 /**
@@ -66,12 +66,12 @@ const putLanguages = http.put(api, () => {
  */
 const deleteLanguages = http.delete(api, ({ request }) => {
   const url = new URL(request.url);
-  const languageId = url.searchParams.get('id');
+  const langId = url.searchParams.get('id');
 
   const delPlace = database.language.delete({
     where: {
       id: {
-        equals: Number(languageId),
+        equals: Number(langId),
       },
     },
   });

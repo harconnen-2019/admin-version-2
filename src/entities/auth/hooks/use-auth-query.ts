@@ -1,8 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 import { http } from '@/shared/api';
 import { BASE_URL } from '@/shared/lib';
-import { useNavigate } from 'react-router-dom';
+
 import { IRequestLogin, schemaSession } from '../api/types';
 
 const _api = {

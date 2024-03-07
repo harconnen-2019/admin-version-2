@@ -1,6 +1,6 @@
 import { useAuth } from '@/entities/auth';
 import { TablePlace, usePlaceList, useRemovePlace } from '@/entities/places';
-import { PATH_PAGE } from '@/pages/path';
+import { PATH } from '@/pages/path';
 import { ButtonAdd, TitlePage } from '@/shared/ui';
 
 /**
@@ -19,7 +19,7 @@ export default function PlaceListPage() {
   return (
     <>
       <TitlePage>Витрины</TitlePage>
-      <ButtonAdd link={PATH_PAGE.place.create}>Новая витрина</ButtonAdd>
+      <ButtonAdd link={PATH.places.create}>Новая витрина</ButtonAdd>
       <TablePlace
         status={status}
         error={error}

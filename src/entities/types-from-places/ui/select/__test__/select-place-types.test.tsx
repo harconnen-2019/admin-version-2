@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@test-utils';
 import { BrowserRouter } from 'react-router-dom';
 import { describe, it } from 'vitest';
 
-import { SelectPlaceTypes } from '../select-place-types';
+import { SelectTypeFromPlaces } from '../select-types-from-places';
 
 const queryClient = new QueryClient();
 
@@ -21,7 +21,7 @@ describe('Список типов для витрин', () => {
     render(
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <SelectPlaceTypes getInputProps={{ onChange: () => {} }} />
+          <SelectTypeFromPlaces getInputProps={{ onChange: () => {} }} />
         </BrowserRouter>
       </QueryClientProvider>,
     );
@@ -37,6 +37,6 @@ describe('Список типов для витрин', () => {
      * В "mswjs/data" формируется 2 значения
      */
     expect(element.length).toBe(3);
-    expect(screen.getByRole('option', { name: 'name-type-test' })).toBeInTheDocument();
+    expect(screen.getAllByRole('option', { name: 'name-type-test' })[0]).toBeInTheDocument();
   });
 });

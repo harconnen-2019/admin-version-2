@@ -14,8 +14,9 @@ import {
 import { UseFormReturnType } from '@mantine/form';
 import { useState } from 'react';
 
-import { SelectPlaceTypes } from '@/entities/places-types';
+import { SelectTypeFromPlaces } from '@/entities/types-from-places';
 import { ImageUpload } from '@/shared/ui';
+
 import { IRequestPostPlace, IRequestPutPlace } from '../../api/types';
 
 const segments = [
@@ -61,7 +62,7 @@ export function FormPlace({ form }: Readonly<IProperties>) {
       {segment === '1' && (
         <>
           <Group mt="md" align="flex-end">
-            <SelectPlaceTypes getInputProps={getInputProps('type')} />
+            <SelectTypeFromPlaces getInputProps={getInputProps('type')} />
 
             <NativeSelect label="Блок спасибо" {...getInputProps('thankyou_type')} mt="md">
               <option disabled value="">

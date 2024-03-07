@@ -4,7 +4,7 @@ import { IconHome, IconLanguage, IconLogout, IconPin, IconUser } from '@tabler/i
 import { NavLink } from 'react-router-dom';
 
 import { useAuth } from '@/entities/auth';
-import { PATH_PAGE } from '@/pages/path';
+import { PATH } from '@/pages/path';
 import { VERSION } from '@/shared/lib';
 import classes from './navbar.module.css';
 
@@ -71,7 +71,7 @@ export function Navbar() {
 
         {place &&
           linkItem(
-            PATH_PAGE.place.root,
+            PATH.places.root,
             'Витрины',
             <IconPin className={classes.linkIcon} stroke={1.5} />,
           )}
@@ -80,7 +80,7 @@ export function Navbar() {
         <Divider my="sm" label="Справочник" labelPosition="left" />
 
         {linkItem(
-          PATH_PAGE.thesaurus.language.root,
+          PATH.thesaurus.languages.root,
           'Языки',
           <IconLanguage className={classes.linkIcon} stroke={1.5} />,
         )}
@@ -94,11 +94,7 @@ export function Navbar() {
             <IconUser className={classes.linkIcon} stroke={1.5} />,
           )}
 
-        {linkItem(
-          PATH_PAGE.logout,
-          'Выход',
-          <IconLogout className={classes.linkIcon} stroke={1.5} />,
-        )}
+        {linkItem(PATH.logout, 'Выход', <IconLogout className={classes.linkIcon} stroke={1.5} />)}
       </div>
     </nav>
   );

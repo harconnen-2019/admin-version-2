@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { PATH_PAGE } from '@/pages/path';
+import { PATH } from '@/pages/path';
 import { SpinnerPage } from '@/shared/ui';
+
 import { useAuth } from '../hooks/use-auth';
 import { useGetAuth } from '../hooks/use-auth-query';
 
@@ -22,7 +23,7 @@ export function RequireAuth({ children }: Readonly<{ children: JSX.Element }>) {
 
   useEffect(() => {
     if ((isLoading === false && data?.success !== 1) || error !== null) {
-      return session(undefined, undefined, () => navigate(PATH_PAGE.login));
+      return session(undefined, undefined, () => navigate(PATH.login));
     }
 
     const currentUser = data?.session?.user?.username ?? undefined;

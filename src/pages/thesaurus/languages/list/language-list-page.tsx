@@ -1,5 +1,5 @@
 import { TableLanguages, useLanguageList, useRemoveLanguage } from '@/entities/thesaurus/languages';
-import { PATH_PAGE } from '@/pages/path';
+import { PATH } from '@/pages/path';
 import { ButtonAdd, TitlePage } from '@/shared/ui';
 
 /**
@@ -16,7 +16,7 @@ export default function LanguageListPage() {
   return (
     <>
       <TitlePage>Языки</TitlePage>
-      <ButtonAdd link={PATH_PAGE.thesaurus.language.create}>Новый язык</ButtonAdd>
+      <ButtonAdd link={PATH.thesaurus.languages.create}>Новый язык</ButtonAdd>
       <TableLanguages status={status} error={error} data={listPlaces} remove={removeLanguage} />
     </>
   );

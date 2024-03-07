@@ -19,10 +19,10 @@ import { useEffect } from 'react';
  * @returns страница
  */
 export default function LanguageEditPage() {
-  const { languageId } = useParams();
+  const { langId } = useParams() as { langId: string };
   const updateLanguage = useUpdateLanguage();
 
-  const { data, error, status } = useGetLanguage(languageId!);
+  const { data, error, status } = useGetLanguage(langId);
   const language = data?.thesaurus_language ?? undefined;
 
   /**
@@ -30,7 +30,7 @@ export default function LanguageEditPage() {
    * Указание полей для валидации
    */
   const form = useForm<languagesType.IRequestPutLanguage>({
-    initialValues: languageInitialPut(languageId!),
+    initialValues: languageInitialPut(langId),
     validate: languageFormValidate,
   });
 

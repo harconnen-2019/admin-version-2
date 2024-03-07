@@ -1,7 +1,8 @@
+import { Skeleton, Table } from '@mantine/core';
 import { ReactNode, useEffect } from 'react';
 
 import { DEBUG } from '@/shared/lib';
-import { Skeleton, Table } from '@mantine/core';
+
 import { ErrorMessage } from '../error-message/error-message';
 
 interface IProperties {

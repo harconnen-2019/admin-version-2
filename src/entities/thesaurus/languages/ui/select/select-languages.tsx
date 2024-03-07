@@ -2,6 +2,7 @@ import { Box, NativeSelect } from '@mantine/core';
 import { GetInputPropsReturnType } from 'node_modules/@mantine/form/lib/types';
 
 import { CustomLoadingOverlay } from '@/shared/ui';
+
 import { useLanguageList } from '../../hooks/use-languages-query';
 
 interface IProperties {
