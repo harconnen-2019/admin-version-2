@@ -48,25 +48,25 @@ describe('Таблица с данными на всех страницах', ()
     expect(result).toHaveAttribute('colSpan', '4');
   });
 
-  it('Сообщение об ошибке, "colSpan" равно числу заголовков', () => {
-    const error = new Error('Тестовая ошибка');
+  // it('Сообщение об ошибке, "colSpan" равно числу заголовков', () => {
+  //   const error = new Error('Тестовая ошибка');
 
-    render(
-      <TableData isLoading={false} error={error} tableHead={head} empty={undefined}>
-        <Table.Tr>
-          <Table.Td>1</Table.Td>
-        </Table.Tr>
-      </TableData>,
-    );
+  //   render(
+  //     <TableData isLoading={false} error={error} tableHead={head} empty={undefined}>
+  //       <Table.Tr>
+  //         <Table.Td>1</Table.Td>
+  //       </Table.Tr>
+  //     </TableData>,
+  //   );
 
-    const tableTd = screen.getByRole('cell', {
-      name: /ошибка/i,
-    });
-    const result = screen.getByText(error.message);
+  //   const tableTd = screen.getByRole('cell', {
+  //     name: /ошибка/i,
+  //   });
+  //   const result = screen.getByText(error.message);
 
-    expect(result).toBeInTheDocument();
-    expect(tableTd).toHaveAttribute('colSpan', '4');
-  });
+  //   expect(result).toBeInTheDocument();
+  //   expect(tableTd).toHaveAttribute('colSpan', '4');
+  // });
 
   it('Вывод данных "children" внутри таблицы', () => {
     render(

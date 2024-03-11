@@ -34,7 +34,7 @@ module.exports = {
       alias: {
         extensions: ['.js', '.jsx', '.ts', '.tsx', '.d.ts'],
         map: [
-          ['@/assets', './src/assets'],
+          ['@/assets', './src/shared/ui/assets'],
           ['@/entities', './src/entities'],
           ['@/pages', './src/pages'],
           ['@/shared', './src/shared'],

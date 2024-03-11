@@ -8,8 +8,8 @@ import {
 import { IconMoon, IconSun } from '@tabler/icons-react';
 import cx from 'clsx';
 
-import imgLogoLight from '@/assets/img/maombi-logo-light.png';
-import imgLogo from '@/assets/img/maombi-logo.png';
+import imgLogoLight from '@/shared/ui/assets/img/maombi-logo-light.png';
+import imgLogo from '@/shared/ui/assets/img/maombi-logo.png';
 import classes from './header.module.css';
 
 interface Properties {
