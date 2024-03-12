@@ -38,14 +38,15 @@ module.exports = {
           ['@/entities', './src/entities'],
           ['@/pages', './src/pages'],
           ['@/shared', './src/shared'],
-          // ['@/store', './src/store'],
-          // ['@/styles', './src/styles'],
+          ['@test-utils', './test-utils'],
+          ['@/mocks', './src/mocks'],
           // ['@/types', './src/types'],
           // ['@/utils', './src/utils'],
         ],
       },
     },
   },
+
   rules: {
     'react/react-in-jsx-scope': 'off',
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],

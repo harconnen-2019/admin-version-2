@@ -5,6 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import { ModalsProvider } from '@mantine/modals';
+import { Notifications } from '@mantine/notifications';
+import '@mantine/notifications/styles.css';
 
 import { Routers } from './pages/routers';
 import { theme } from './theme';
@@ -21,6 +23,7 @@ function App() {
     <MantineProvider theme={theme}>
       <ModalsProvider>
         <QueryClientProvider client={queryClient}>
+          <Notifications />
           <BrowserRouter>
             <Routers />
           </BrowserRouter>

@@ -14,16 +14,15 @@ import {
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 
-import { getErrorMessage } from '@/shared/lib/get-error-message';
-import { useLoginForm } from './hook/use-login-form';
+import { useLogin } from '@/entities/auth';
 import classes from './login.module.css';
 
 /**
  * Страница авторизации
  * @returns JSX Element
  */
-export function LoginPage() {
-  const { handleSubmit, isSend, error } = useLoginForm();
+export default function LoginPage() {
+  const login = useLogin();
 
   const form = useForm({
     initialValues: {
@@ -46,7 +45,7 @@ export function LoginPage() {
 
         <Paper withBorder shadow="md" p={30} mt={30} radius="md">
           {/* <form onSubmit={handleSubmit}> */}
-          <form onSubmit={form.onSubmit((values) => handleSubmit(values))}>
+          <form onSubmit={form.onSubmit((values) => login.mutate(values))}>
             <TextInput label="Логин" placeholder="Ваш логин" {...form.getInputProps('username')} />
             <PasswordInput
               label="Пароль"
@@ -60,17 +59,17 @@ export function LoginPage() {
                 {...form.getInputProps('saveSession', { type: 'checkbox' })}
               />
             </Group>
-            {error && (
+            {login.error && (
               <>
                 <Space h="md" />
                 <Alert variant="light" color="red">
                   <Text c="red" size="sm">
-                    Ошибка: {getErrorMessage(error)}
+                    Ошибка: {login.error.message}
                   </Text>
                 </Alert>
               </>
             )}
-            <Button type="submit" fullWidth mt="xl" disabled={isSend}>
+            <Button type="submit" fullWidth mt="xl" disabled={login.isPending}>
               Войти
             </Button>
           </form>

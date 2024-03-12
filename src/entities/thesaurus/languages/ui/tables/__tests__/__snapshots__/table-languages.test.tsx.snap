@@ -1,0 +1,20 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Таблица со списком языков > Создаем "снап-шот" данных 1`] = `
+[
+  {
+    "created": 1946-10-04T18:12:23.671Z,
+    "id": 1,
+    "modified": 1948-06-03T12:04:33.301Z,
+    "name": "Русский",
+    "slug": "ru",
+  },
+  {
+    "created": 1948-10-04T18:12:23.671Z,
+    "id": 2,
+    "modified": 1948-06-03T12:04:33.301Z,
+    "name": "English",
+    "slug": "en",
+  },
+]
+`;
