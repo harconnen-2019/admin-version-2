@@ -45,16 +45,16 @@ export function ApiPage() {
       .then(async (response) => {
         const data = await response.json();
 
-        // check for error response
+        // проверка ответа на ошибку
         if (!response.ok) {
-          // get error message from body or default to response status
+          // получить сообщение об ошибке или по умолчанию получить статус ответа
           throw data?.message || response.status;
         }
 
         setApi(JSON.stringify(data));
       })
       .catch((error) => {
-        console.error('There was an error!', error);
+        console.error('Произошла ошибка!', error);
       });
   };
 
@@ -89,7 +89,7 @@ export function ApiPage() {
           <CopyButton value={api}>
             {({ copied, copy }) => (
               <Button color={copied ? 'teal' : 'blue'} onClick={copy}>
-                {copied ? 'Copied json' : 'Copy json'}
+                {copied ? 'json скопирован' : 'копирование json'}
               </Button>
             )}
           </CopyButton>

@@ -22,22 +22,40 @@ class ConsoleLogger implements Log {
   readonly warn: LogFunction;
   readonly error: LogFunction;
 
-  constructor(options?: { level?: LogLevel }) {
+  constructor(options: { level: LogLevel }) {
     const { level } = options ?? {};
 
-    if (level === 'error') {
-      this.log = NO_OP;
-      this.warn = NO_OP;
-      this.error = console.error.bind(console);
-    } else if (level === 'warn') {
-      this.log = NO_OP;
-      this.warn = console.warn.bind(console);
-      this.error = console.error.bind(console);
+    if (['log', 'warn', 'error'].includes(level)) {
+      if (level === 'error') {
+        this.log = NO_OP;
+        this.warn = NO_OP;
+        this.error = console.error.bind(console);
+      } else if (level === 'warn') {
+        this.log = NO_OP;
+        this.warn = console.warn.bind(console);
+        this.error = console.error.bind(console);
+      } else {
+        this.log = console.log.bind(console);
+        this.warn = console.warn.bind(console);
+        this.error = console.error.bind(console);
+      }
     } else {
-      this.log = console.log.bind(console);
-      this.warn = console.warn.bind(console);
-      this.error = console.error.bind(console);
+      throw new Error(`Недопустимый уровень логирования: ${level}`);
     }
+
+    // if (level === 'error') {
+    //   this.log = NO_OP;
+    //   this.warn = NO_OP;
+    //   this.error = console.error.bind(console);
+    // } else if (level === 'warn') {
+    //   this.log = NO_OP;
+    //   this.warn = console.warn.bind(console);
+    //   this.error = console.error.bind(console);
+    // } else {
+    //   this.log = console.log.bind(console);
+    //   this.warn = console.warn.bind(console);
+    //   this.error = console.error.bind(console);
+    // }
   }
 }
 

@@ -6,7 +6,7 @@ import { DEBUG } from './api.constant';
  * @returns полный путь
  */
 export function baseUrl(path: string) {
-  return `${DEBUG ? 'http://localhost:3003' : ''}/api/red${path}`;
+  return `${DEBUG ? 'http://localhost:5173' : ''}/api/red${path}`;
 }
 
 /**
