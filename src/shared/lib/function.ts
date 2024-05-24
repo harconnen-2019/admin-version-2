@@ -1,4 +1,4 @@
-import { DEBUG, DEFAULT_PAGE_LIMIT } from './setting';
+import { DEBUG, DEFAULT_PAGE_LIMIT } from '../api/api.constant';
 
 /**
  * Смещение получения записей от номера текущей страницы
@@ -142,7 +142,7 @@ export function objectToFormDate(state: {
  * @param array список полей для пометки undefined
  * @returns объект с помеченными полями
  */
-export function removeImagesIfString(
+export function removeImagesIfString<T>(
   state: { [x: string]: string | number | null | Blob | undefined },
   array: string[],
 ) {
@@ -155,7 +155,7 @@ export function removeImagesIfString(
     }
   }
 
-  return object;
+  return object as T;
 }
 
 /**

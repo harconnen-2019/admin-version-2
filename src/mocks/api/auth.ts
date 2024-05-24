@@ -1,9 +1,9 @@
-import { HttpResponse, http } from 'msw';
-import { BASE_URL } from '../../shared/lib';
+import { baseUrl } from '@/shared/api';
+import { HttpResponse, delay, http } from 'msw';
 import { database } from '../database/database';
 
-const apiSession = `${BASE_URL}/users/session/`;
-const apiLogin = `${BASE_URL}/users/login/`;
+const apiSession = baseUrl('/users/session/');
+const apiLogin = baseUrl('/users/login/');
 
 const outGet = () => {
   return {
@@ -15,14 +15,18 @@ const outGet = () => {
         },
       },
     }),
+    err_mess: 'Ошибка для теста',
+    err_code: 505,
   };
 };
 
-const getSession = http.get(apiSession, () => {
+const getSession = http.get(apiSession, async () => {
+  await delay();
   return HttpResponse.json(outGet());
 });
 
-const getLogin = http.post(apiLogin, () => {
+const getLogin = http.post(apiLogin, async () => {
+  await delay();
   return HttpResponse.json(outGet());
 });
 

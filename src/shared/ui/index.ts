@@ -1,3 +1,5 @@
+export * from './alert/error-handler/error.ui';
+export * from './alert/full-page-error/full-page-error.ui';
 export * from './buttons/button-add';
 export * from './buttons/button-back';
 export * from './buttons/button-del';
@@ -9,6 +11,7 @@ export * from './forms/img-upload/img-upload';
 export * from './links/link-anchor';
 export * from './spinners/custom-loading-overlay';
 export * from './spinners/loadable';
+export * from './spinners/spinner-data';
 export * from './spinners/spinner-page';
 export * from './tables/table-data';
 export * from './titles/title-page';
