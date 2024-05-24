@@ -1,16 +1,17 @@
-import { HttpResponse, http } from 'msw';
+import { HttpResponse, delay, http } from 'msw';
 
-import { BASE_URL } from '@/shared/lib';
+import { typeFromPlaceApi } from '@/entities/type-from-place';
 import { database } from '../database/database';
 
-const api = `${BASE_URL}/places/type/`;
+const api = typeFromPlaceApi.api;
 
-const getPlacesTypesList = http.patch(api, () => {
-  const out = {
+const list = http.patch(api, async () => {
+  const result = {
     success: 1,
     places_type_list: database.type.getAll(),
   };
-  return HttpResponse.json(out);
+  await delay();
+  return HttpResponse.json(result);
 });
 
-export const httpPlacesType = [getPlacesTypesList];
+export const httpPlacesType = [list];

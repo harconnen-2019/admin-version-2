@@ -48,7 +48,12 @@ export const initDataBase = () => {
   const databaseType = database.type.create({ id: 1, name: 'name-type-test' });
   database.type.create({ id: 2 });
 
-  database.language.create({ id: 1, name: 'Русский', slug: 'ru' });
+  database.language.create({
+    id: 1,
+    name: 'Русский',
+    slug: 'ru',
+    created: new Date('1946-10-04T18:12:23.671Z'),
+  });
   database.language.create({ id: 2, name: 'English', slug: 'en' });
 
   /**
@@ -56,7 +61,7 @@ export const initDataBase = () => {
    */
   const databasePlace = database.place.create({
     id: 1,
-    created: faker.date.birthdate(),
+    created: new Date('1946-10-04T18:12:23.671Z'),
     modified: faker.date.birthdate(),
     name: 'name-test',
     domain: 'domain-test',

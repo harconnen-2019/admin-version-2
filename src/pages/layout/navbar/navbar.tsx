@@ -3,19 +3,21 @@ import { useDocumentTitle } from '@mantine/hooks';
 import { IconHome, IconLanguage, IconLogout, IconPin, IconUser } from '@tabler/icons-react';
 import { NavLink } from 'react-router-dom';
 
-import { useAuth } from '@/entities/auth';
-import { PATH } from '@/pages/path';
-import { VERSION } from '@/shared/lib';
+import { sessionTypes } from '@/entities/session';
+import { VERSION } from '@/shared/api';
+import { pathKeys } from '@/shared/lib/react-router';
+
 import classes from './navbar.module.css';
 
 /**
  * Боковая навигация
+ * @param root0 пропсы
+ * @param root0.session сессия пользователя
  * @returns JSX Element
  */
-export function Navbar() {
+export function Navbar({ session }: Readonly<{ session: sessionTypes.Session }>) {
   const title = `Maombi-Admin - ${process.env.NODE_ENV}`;
   useDocumentTitle(title);
-  const { place, user } = useAuth();
 
   /**
    * ССылки для боковой навигации
@@ -69,32 +71,36 @@ export function Navbar() {
 
         {linkItem('/', 'Главная', <IconHome className={classes.linkIcon} stroke={1.5} />)}
 
-        {place &&
+        {session.place &&
           linkItem(
-            PATH.places.root,
+            pathKeys.places.root(),
             'Витрины',
             <IconPin className={classes.linkIcon} stroke={1.5} />,
           )}
-        <Box ml={30}>{titleNavBar(place?.name, 'Активная витрина')}</Box>
+        <Box ml={30}>{titleNavBar(session.place?.name, 'Активная витрина')}</Box>
 
         <Divider my="sm" label="Справочник" labelPosition="left" />
 
         {linkItem(
-          PATH.thesaurus.languages.root,
+          pathKeys.languages.root(),
           'Языки',
           <IconLanguage className={classes.linkIcon} stroke={1.5} />,
         )}
       </div>
 
       <div className={classes.footer}>
-        {user &&
+        {session.user &&
           linkItem(
             '/profile',
-            user ?? 'user',
+            session.user.username ?? 'user',
             <IconUser className={classes.linkIcon} stroke={1.5} />,
           )}
 
-        {linkItem(PATH.logout, 'Выход', <IconLogout className={classes.linkIcon} stroke={1.5} />)}
+        {linkItem(
+          pathKeys.logout(),
+          'Выход',
+          <IconLogout className={classes.linkIcon} stroke={1.5} />,
+        )}
       </div>
     </nav>
   );

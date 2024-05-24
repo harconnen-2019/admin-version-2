@@ -7,7 +7,7 @@ import { Center, Loader } from '@mantine/core';
  */
 export function SpinnerPage() {
   return (
-    <Center h="100Vh">
+    <Center h="30Vh">
       <Loader size={50} />
     </Center>
   );

@@ -1,15 +1,16 @@
 import { Skeleton, Table } from '@mantine/core';
 import { ReactNode, useEffect } from 'react';
 
-import { DEBUG } from '@/shared/lib';
+import { DEBUG } from '@/shared/api';
 
-import { ErrorMessage } from '../error-message/error-message';
+import { GenericError } from '@/shared/lib/fetch';
+import { ErrorHandler } from '../alert/error-handler/error.ui';
 
 interface IProperties {
   isLoading: boolean;
   tableHead?: { [key: string]: string | number }[];
   children: ReactNode;
-  error: Error | null | undefined;
+  error: GenericError<never> | null | undefined;
   // если пустая таблица выводится предупреждение
   empty: boolean | undefined;
 }
@@ -34,13 +35,13 @@ export function TableData(properties: Readonly<IProperties>) {
     </Table.Tr>
   );
 
-  const error_ = (
+  const error_ = error ? (
     <Table.Tr>
       <Table.Td colSpan={tableHead?.length} p={0}>
-        <ErrorMessage error={error}>Данные не загружены</ErrorMessage>
+        <ErrorHandler error={error} />
       </Table.Td>
     </Table.Tr>
-  );
+  ) : undefined;
 
   const head = isDataHead ? (
     <Table.Thead>
