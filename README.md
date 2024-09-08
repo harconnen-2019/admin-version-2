@@ -1,30 +1,30 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Проект административной панели, для управления несколькими мини-сайтами (витринами)
 
-Currently, two official plugins are available:
+[Схема проекта в figma](https://www.figma.com/board/XhKIn0H5M9HMi8jyUfyK04/FSD?node-id=0-1&t=NmeYZntFQBdMnQut-1)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Описание проекта
 
-## Expanding the ESLint configuration
+- Проект создан на основе архитектуры FSD.
+- В качестве управление состоянием используется TanStack Query, Zustand
+- Для имитации сервер API используется Mock Service Worker + Faker
+- Для тестирования используется Vitest + React Testing Library
+- Для стилизации используется Mantine
+- Для валидации json используется ZOD
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+В репозитории находится стартовая настройка проекта, при расширении проекта копируются папки с файлами и делаются изменения.
 
-- Configure the top-level `parserOptions` property like this:
+В основе лежит CRUD - список, добавление, изменение, удаление.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Для уменьшения кода при добавлении и изменении используется только один компонент формы с UI.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Тесты написаны не везде, только в основных компонентах.
+
+## Установка
+
+- Этот проект был создан с помощью Create Vite.
+- Чтобы запустить интерфейс локально:
+- Клонировать этот репозиторий
+- **yarn install** для установки всех зависимостей, определенных в файле package.json.
+- **yarn dev** запустить сервер разработки Vite.
